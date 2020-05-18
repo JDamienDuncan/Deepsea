@@ -7,7 +7,7 @@ let config = {
     width: 640,
     height: 480,
    
-    scene: [ Menu, Play, Drone, Days ]
+    scene: [ Menu, Play, Drone, Days, Summary ]
 }
 
 // main game object
@@ -22,5 +22,5 @@ game.settings = {
 
 
 // reserve keyboard vars
-let keyF, keyLEFT, keyRIGHT, keyDOWN, keyUP, keySPACE;
+let keyF, keyX, keyLEFT, keyRIGHT, keyDOWN, keyUP, keySPACE;
 
