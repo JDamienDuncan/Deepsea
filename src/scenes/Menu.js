@@ -15,7 +15,7 @@ class Menu extends Phaser.Scene {
     
     create() {
         // Menu Display
-        
+        this.game.day_count = 1;
         let menuConfig = {
             fontFamily: 'Courier',
             fontSize: '56px',

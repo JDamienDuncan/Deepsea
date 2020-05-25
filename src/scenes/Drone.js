@@ -333,7 +333,7 @@ class Drone extends Phaser.Scene {
             
             this.sound.play('sfx_select');
             
-            this.scene.start("summaryScene", {
+            this.scene.start("dayScene", {
                 level01 : this.score1, 
                 level02 : this.score2,
                 level03 : this.score3,
