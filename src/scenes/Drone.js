@@ -7,6 +7,7 @@ class Drone extends Phaser.Scene {
         this.load.image('dronefield', './assets/Drone_Field.png');
         this.load.image('bot_sprite', './assets/Bot.png');
         this.load.image('marker_sprite', './assets/Marker.png');
+        this.load.image('UI', './assets/BlankUI.png');
 
     }
 
@@ -63,6 +64,14 @@ class Drone extends Phaser.Scene {
         
         // Draw map background
         this.dronefield = this.add.tileSprite(0, 0, 640, 480, 'dronefield').setOrigin(0, 0);
+        this.background = this.add.tileSprite(0, 0, 640, 480, 'UI').setOrigin(0, 0);
+
+        // Controls Fadeout/Fadein of the Images
+        this.cameras.main.once('camerafadeincomplete', function (camera) {
+
+            //camera.fadeOut(2000);
+        });
+        this.cameras.main.fadeIn(2500);
         
         // Add text to screen
         this.droneTitle = this.add.text(300, 10, 'Drag Each Drone to a Location!', textConfig);
@@ -78,12 +87,12 @@ class Drone extends Phaser.Scene {
         this.counter05 = this.add.text(480, 270,  ''+this.score5, scoreConfig);
 
         // Draw rect behind Bots
-        this.add.rectangle(140, 400, 385 , 45, 0xFFFFFF).setOrigin(0, 0);
+        this.add.rectangle(140, 400, 385 , 45, 0x000000).setOrigin(0, 0);
 
         // Draw locational stand ins
-        this.location01 = new Spot(this, 100, 35, 'marker_sprite', 0, 30).setOrigin(0,0);  // Counter 1
+        this.location01 = new Spot(this, 100, 55, 'marker_sprite', 0, 30).setOrigin(0,0);  // Counter 1
         this.location02 = new Spot(this, 200, 200, 'marker_sprite', 0, 30).setOrigin(0,0); // Counter 2
-        this.location03 = new Spot(this, 35, 240, 'marker_sprite', 0, 30).setOrigin(0,0);  // Counter 3
+        this.location03 = new Spot(this, 60, 240, 'marker_sprite', 0, 30).setOrigin(0,0);  // Counter 3
         this.location04 = new Spot(this, 410, 120, 'marker_sprite', 0, 30).setOrigin(0,0); // Counter 4
         this.location05 = new Spot(this, 440, 280, 'marker_sprite', 0, 30).setOrigin(0,0); // Counter 5
 
@@ -144,34 +153,39 @@ class Drone extends Phaser.Scene {
         if(!(game.input.mousePointer.isDown) && this.checkCollision2(this.bot01, this.location01)){
             this.sound.play('sfx_select');
             this.bot01.x = 1000;
-            this.score1 = this.score1 + 1;  
+            this.score1 = this.score1 + 1;
+            this.game.bot1Loc = 1;  
             this.counter01.setText(''+this.score1);
             
         }
         else if(!(game.input.mousePointer.isDown) && this.checkCollision2(this.bot02, this.location01)){
             this.sound.play('sfx_select');
             this.bot02.x = 1000;
-            this.score1 += 1; 
+            this.score1 += 1;
+            this.game.bot2Loc = 1; 
             this.counter01.setText(''+this.score1);
             
         }
         else if(!(game.input.mousePointer.isDown) && this.checkCollision2(this.bot03, this.location01)){
             this.sound.play('sfx_select');
             this.bot03.x = 1000;
-            this.score1 += 1; 
+            this.score1 += 1;
+            this.game.bot3Loc = 1;  
             this.counter01.setText(''+this.score1);
         }
         else if(!(game.input.mousePointer.isDown) && this.checkCollision2(this.bot04, this.location01)){
             this.sound.play('sfx_select');
             this.bot04.x = 1000;
             this.score1 += 1; 
+            this.game.bot4Loc = 1; 
             this.counter01.setText(''+this.score1);
             
         }
         else if(!(game.input.mousePointer.isDown) && this.checkCollision2(this.bot05, this.location01)){
             this.sound.play('sfx_select');
             this.bot05.x = 1000;
-            this.score1 += 1; 
+            this.score1 += 1;
+            this.game.bot5Loc = 1;  
             this.counter01.setText(''+this.score1);
             
         }
@@ -180,7 +194,8 @@ class Drone extends Phaser.Scene {
         if(!(game.input.mousePointer.isDown) && this.checkCollision2(this.bot01, this.location02)){
             this.sound.play('sfx_select');
             this.bot01.x = 1000;
-            this.score2 = this.score2 + 1; 
+            this.score2 = this.score2 + 1;
+            this.game.bot1Loc = 2; 
             this.counter02.setText(''+this.score2);
             
         }
@@ -188,26 +203,30 @@ class Drone extends Phaser.Scene {
             this.sound.play('sfx_select');
             this.bot02.x = 1000;
             this.score2 += 1; 
+            this.game.bot2Loc = 2; 
             this.counter02.setText(''+this.score2);
             
         }
         else if(!(game.input.mousePointer.isDown) && this.checkCollision2(this.bot03, this.location02)){
             this.sound.play('sfx_select');
             this.bot03.x = 1000;
-            this.score2 += 1; 
+            this.score2 += 1;
+            this.game.bot3Loc = 2;  
             this.counter02.setText(''+this.score2);
         }
         else if(!(game.input.mousePointer.isDown) && this.checkCollision2(this.bot04, this.location02)){
             this.sound.play('sfx_select');
             this.bot04.x = 1000;
             this.score2 += 1; 
+            this.game.bot4Loc = 2; 
             this.counter02.setText(''+this.score2);
             
         }
         else if(!(game.input.mousePointer.isDown) && this.checkCollision2(this.bot05, this.location02)){
             this.sound.play('sfx_select');
             this.bot05.x = 1000;
-            this.score2 += 1; 
+            this.score2 += 1;
+            this.game.bot5Loc = 2;  
             this.counter02.setText(''+this.score2);
             
         }
@@ -217,6 +236,7 @@ class Drone extends Phaser.Scene {
             this.sound.play('sfx_select');
             this.bot01.x = 1000;
             this.score3 = this.score3 + 1; 
+            this.game.bot1Loc = 3; 
             this.counter03.setText(''+this.score3);
             
         }
@@ -224,6 +244,7 @@ class Drone extends Phaser.Scene {
             this.sound.play('sfx_select');
             this.bot02.x = 1000;
             this.score3 += 1; 
+            this.game.bot2Loc = 3; 
             this.counter03.setText(''+this.score3);
             
         }
@@ -231,19 +252,22 @@ class Drone extends Phaser.Scene {
             this.sound.play('sfx_select');
             this.bot03.x = 1000;
             this.score3 += 1; 
+            this.game.bot3Loc = 3; 
             this.counter03.setText(''+this.score3);
         }
         else if(!(game.input.mousePointer.isDown) && this.checkCollision2(this.bot04, this.location03)){
             this.sound.play('sfx_select');
             this.bot04.x = 1000;
             this.score3 += 1; 
+            this.game.bot4Loc = 3; 
             this.counter03.setText(''+this.score3);
             
         }
         else if(!(game.input.mousePointer.isDown) && this.checkCollision2(this.bot05, this.location03)){
             this.sound.play('sfx_select');
             this.bot05.x = 1000;
-            this.score3 += 1; 
+            this.score3 += 1;
+            this.game.bot5Loc = 3;  
             this.counter03.setText(''+this.score3);
             
         }
@@ -252,7 +276,8 @@ class Drone extends Phaser.Scene {
         if(!(game.input.mousePointer.isDown) && this.checkCollision2(this.bot01, this.location04)){
             this.sound.play('sfx_select');
             this.bot01.x = 1000;
-            this.score4 = this.score4 + 1; 
+            this.score4 = this.score4 + 1;
+            this.game.bot1Loc = 4; 
             this.counter04.setText(''+this.score4);
             
         }
@@ -260,6 +285,7 @@ class Drone extends Phaser.Scene {
             this.sound.play('sfx_select');
             this.bot02.x = 1000;
             this.score4 += 1; 
+            this.game.bot2Loc = 4; 
             this.counter04.setText(''+this.score4);
             
         }
@@ -267,19 +293,22 @@ class Drone extends Phaser.Scene {
             this.sound.play('sfx_select');
             this.bot03.x = 1000;
             this.score4 += 1; 
+            this.game.bot3Loc = 4; 
             this.counter04.setText(''+this.score4);
         }
         else if(!(game.input.mousePointer.isDown) && this.checkCollision2(this.bot04, this.location04)){
             this.sound.play('sfx_select');
             this.bot04.x = 1000;
             this.score4 += 1; 
+            this.game.bot4Loc = 4; 
             this.counter04.setText(''+this.score4);
             
         }
         else if(!(game.input.mousePointer.isDown) && this.checkCollision2(this.bot05, this.location04)){
             this.sound.play('sfx_select');
             this.bot05.x = 1000;
-            this.score4 += 1; 
+            this.score4 += 1;
+            this.game.bot5Loc = 4;  
             this.counter04.setText(''+this.score4);
             
         }
@@ -289,6 +318,7 @@ class Drone extends Phaser.Scene {
             this.sound.play('sfx_select');
             this.bot01.x = 1000;
             this.score5 = this.score5 + 1; 
+            this.game.bot1Loc = 5; 
             this.counter05.setText(''+this.score5);
             
         }
@@ -296,6 +326,7 @@ class Drone extends Phaser.Scene {
             this.sound.play('sfx_select');
             this.bot02.x = 1000;
             this.score5 += 1; 
+            this.game.bot2Loc = 5; 
             this.counter05.setText(''+this.score5);
             
         }
@@ -303,12 +334,14 @@ class Drone extends Phaser.Scene {
             this.sound.play('sfx_select');
             this.bot03.x = 1000;
             this.score5 += 1; 
+            this.game.bot3Loc = 5; 
             this.counter05.setText(''+this.score5);
         }
         else if(!(game.input.mousePointer.isDown) && this.checkCollision2(this.bot04, this.location05)){
             this.sound.play('sfx_select');
             this.bot04.x = 1000;
             this.score5 += 1; 
+            this.game.bot4Loc = 5; 
             this.counter05.setText(''+this.score5);
             
         }
@@ -316,6 +349,7 @@ class Drone extends Phaser.Scene {
             this.sound.play('sfx_select');
             this.bot05.x = 1000;
             this.score5 += 1; 
+            this.game.bot5Loc = 5; 
             this.counter05.setText(''+this.score5);
             
         }
@@ -332,14 +366,12 @@ class Drone extends Phaser.Scene {
         
             
             this.sound.play('sfx_select');
-            
-            this.scene.start("dayScene", {
-                level01 : this.score1, 
-                level02 : this.score2,
-                level03 : this.score3,
-                level04 : this.score4,
-                level05 : this.score5
-            }); 
+            this.game.loc1 = this.score1;
+            this.game.loc2 = this.score2;
+            this.game.loc3 = this.score3;
+            this.game.loc4 = this.score4;
+            this.game.loc5 = this.score5;
+            this.scene.start("deductionScene"); 
             
         }
 

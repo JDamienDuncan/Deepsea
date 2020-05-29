@@ -59,8 +59,8 @@ class Play extends Phaser.Scene {
         }
         
         // Display test room messages
-        this.testTitle = this.add.text(180, 10, 'Deep Seas Test Room!', testConfig);
-        this.testGreeting = this.add.text(180, 60, 'Welcome, Dr. Ingram!', testConfig);
+        this.testTitle = this.add.text(180, 10, 'Welcome to Project: Deep Seas', testConfig);
+        //this.testGreeting = this.add.text(180, 60, '', testConfig);
         testConfig.fixedWidth = 420;
         testConfig.fontSize = '24px';
         this.testAsk = this.add.text(140, 110, 'What would you like to test?', testConfig);
@@ -102,7 +102,7 @@ class Play extends Phaser.Scene {
                 && game.input.mousePointer.y < 260
                 ) {
                     this.test_music.stop();
-                    this.scene.start("dayScene")
+                    this.scene.start("day0")
                 }
         
         

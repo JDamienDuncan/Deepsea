@@ -115,52 +115,52 @@ class Days extends Phaser.Scene {
             
             if(this.game.day_count == 1){
                 //console.log('Day 1 start!')
-                this.scene.start("day1"); 
+                this.scene.start("droneScene"); 
             }
             else if(this.game.day_count == 2){
-                this.scene.start("day1");
+                this.scene.start("droneScene");
             }
             else if(this.game.day_count == 3){
-                this.scene.start("day1");
+                this.scene.start("droneScene");
             }
             else if(this.game.day_count == 4){
-                this.scene.start("day1");
+                this.scene.start("droneScene");
             }
             else if(this.game.day_count == 5){
-                this.scene.start("day1");
+                this.scene.start("droneScene");
             }
             else if(this.game.day_count == 6){
-                this.scene.start("day1");
+                this.scene.start("droneScene");
             }
             else if(this.game.day_count == 7){
-                this.scene.start("day1");
+                this.scene.start("droneScene");
             }
             else if(this.game.day_count == 8){
-                this.scene.start("day1");
+                this.scene.start("droneScene");
             }
             else if(this.game.day_count == 9){
-                this.scene.start("day1");
+                this.scene.start("droneScene");
             }
             else if(this.game.day_count == 10){
-                this.scene.start("day1");
+                this.scene.start("droneScene");
             }
             else if(this.game.day_count == 11){
-                this.scene.start("day1");
+                this.scene.start("droneScene");
             }
             else if(this.game.day_count == 12){
-                this.scene.start("day1");
+                this.scene.start("droneScene");
             }
             else if(this.game.day_count == 13){
-                this.scene.start("day1");
+                this.scene.start("droneScene");
             }
             else if(this.game.day_count == 14){
-                this.scene.start("day1");
+                this.scene.start("droneScene");
             }
             else if(this.game.day_count == 15){
-                this.scene.start("day1");
+                this.scene.start("droneScene");
             }
             else if(this.game.day_count == 16){
-                this.scene.start("day1");
+                this.scene.start("droneScene");
             }
 
         }
