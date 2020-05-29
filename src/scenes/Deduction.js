@@ -30,6 +30,7 @@ class Deduction extends Phaser.Scene {
         var strangeData = ["Blurred Image of a Hand", "Crackling Audio that Sounds like Singing", "A Faded Image of a Humanoid Shape", "A Cuddle Fish"];
         var usefulData =  ["Sample of a Prime Micro Organism", "Fossilized Mirco Plankton", "A Stromatolite", "Location of a Deep Sea Trench"];
         
+        keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         
         // Display test room messages
         /*
@@ -741,10 +742,16 @@ class Deduction extends Phaser.Scene {
         this.loc3 = this.add.text(120, 200, 'Drone3 has a '+this.game.data3, resultConfig);
         this.loc4 = this.add.text(120, 250, 'Drone4 has a '+this.game.data4, resultConfig);
         this.loc5 = this.add.text(120, 300, 'Drone5 has a '+this.game.data5, resultConfig);
+
+        this.chatAdv = this.add.text(120, 350, 'Press -Space- to Continue!', resultConfig);
     }
         
 
     update(){
+
+        if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
+            this.scene.start("dialogueScene");
+        }
      }
 
      
