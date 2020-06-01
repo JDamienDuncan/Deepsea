@@ -4,6 +4,8 @@ class Days extends Phaser.Scene {
     }
 
     preload() {
+        // Load the start of the day images
+        this.load.image('day0', './assets/DeepSea.png');
         this.load.image('day1', './assets/Day1.png');
         this.load.image('day2', './assets/Day2.png');
         this.load.image('day3', './assets/Day3.png');
@@ -21,22 +23,20 @@ class Days extends Phaser.Scene {
         this.load.image('day15', './assets/Day15.png');
         this.load.image('day16', './assets/Day16.png');
 
-
+        // Load sound used in transitions 
         this.load.audio('tran', './assets/Transition.mp3');
 
     }
 
-
-
     create() {
-        
-        
-        
-        
         
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
 
-        if(this.game.day_count == 1){
+        // Loads the correct image based on what the day is in the current cycle
+        if(this.game.day_count == 0){
+            this.dayfield = this.add.tileSprite(0, 0, 640, 480, 'day0').setOrigin(0, 0);
+        }
+        else if(this.game.day_count == 1){
             this.dayfield = this.add.tileSprite(0, 0, 640, 480, 'day1').setOrigin(0, 0);
         }
         else if(this.game.day_count == 2){
@@ -85,36 +85,38 @@ class Days extends Phaser.Scene {
             this.dayfield = this.add.tileSprite(0, 0, 640, 480, 'day16').setOrigin(0, 0);
         }
         
-        
-        //this.dayfield = this.add.tileSprite(0, 0, 640, 480, 'day1').setOrigin(0, 0);
-
+        // Set up audio for transitions
         var transition;
-        
         this.transition = game.sound.add('tran')
-        // Start Title Music
         
+        // Start Title Music
         this.transition.play();
 
+        // Control FadeIn/FadeOut of scenes
         this.cameras.main.once('camerafadeincomplete', function (camera) {
 
             camera.fadeOut(2000);
         });
-
         this.cameras.main.fadeIn(2000);
 
+        // Frame counter used as a timer
         var timeCheck;
         this.timeCheck = 1;
         
     }
 
-
     update() {
+        // Increase counter every frame
         this.timeCheck += 1;
-        //console.log(this.timeCheck);
+
+        // Use counter to allow the opening image time to fade out
         if(this.timeCheck >= 250){
-            
-            if(this.game.day_count == 1){
-                //console.log('Day 1 start!')
+            // Load proper scene based what day in the cycle it is 
+            if(this.game.day_count == 0){
+                this.game.day_count = this.game.day_count + 1;
+                this.scene.start("day0"); 
+            }
+            else if(this.game.day_count == 1){
                 this.scene.start("droneScene"); 
             }
             else if(this.game.day_count == 2){
@@ -162,39 +164,6 @@ class Days extends Phaser.Scene {
             else if(this.game.day_count == 16){
                 this.scene.start("droneScene");
             }
-
         }
-        
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

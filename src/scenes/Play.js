@@ -4,22 +4,16 @@ class Play extends Phaser.Scene {
     }
 
     preload() {
-        // load images/tile sprites
+        // Load background image
         this.load.image('testfield', './assets/testing.png');
-        
-        
-
-       
-        
-        
-    }
+     }
 
     create() {
-        // Place test room background
+        // Place start room background
         this.testfield = this.add.tileSprite(0, 0, 640, 480, 'testfield').setOrigin(0, 0);
         
         
-        // Test room music
+        // Load start room music
         var test_music;
         this.test_music = this.sound.add('sfx_test');
 
@@ -44,7 +38,7 @@ class Play extends Phaser.Scene {
             fixedWidth: 340
         }
 
-        // Test room button config
+        // Start room button config
         let buttonTestConfig = {
             fontFamily: 'Courier',
             fontSize: '20px',
@@ -60,6 +54,7 @@ class Play extends Phaser.Scene {
         
         // Display test room messages
         this.testTitle = this.add.text(180, 10, 'Welcome to Project: Deep Seas', testConfig);
+        
         //this.testGreeting = this.add.text(180, 60, '', testConfig);
         testConfig.fixedWidth = 420;
         testConfig.fontSize = '24px';
@@ -75,7 +70,7 @@ class Play extends Phaser.Scene {
         this.testDays = this.add.text(220, 400, 'Press F to Restart', buttonTestConfig);
         
         
-        // Play Groovy test room track
+        // Play start room track
         this.test_music.play();
         
 
@@ -91,7 +86,7 @@ class Play extends Phaser.Scene {
             && game.input.mousePointer.y < 260
             ) {
                 this.test_music.stop();
-                this.scene.start("droneScene")
+                this.scene.start("droneScene")   // Load into Drone Scene 
             }
         
         // Day Loop test check
@@ -102,7 +97,7 @@ class Play extends Phaser.Scene {
                 && game.input.mousePointer.y < 260
                 ) {
                     this.test_music.stop();
-                    this.scene.start("day0")
+                    this.scene.start("dayScene")   // Load into Day Cycle Scene
                 }
         
         
@@ -110,7 +105,7 @@ class Play extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(keyF)) {
             this.test_music.stop();
             
-            this.scene.start("menuScene"); 
+            this.scene.start("menuScene");   // Restart Game
         }
     }
         
