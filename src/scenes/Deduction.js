@@ -7,6 +7,7 @@ class Deduction extends Phaser.Scene {
         this.load.image('XD', './assets/DeductBlank.png');
          // Add drone interaction audio
          this.load.audio('sfx_page', './assets/PageFlip.mp3');
+         this.load.audio('sfx_click', './assets/Click2.mp3');
 
     }
 
@@ -107,9 +108,10 @@ class Deduction extends Phaser.Scene {
             game.input.mousePointer.x > 96 && 
             game.input.mousePointer.y < 128 &&
             game.input.mousePointer.y > 80){
-            
+                
             if(this.count == 1){
                 if(this.game.data1 != 'Discarded!'){
+                    this.sound.play('sfx_click');
                     this.game.data1 = 'Submitted!';
                     this.game.relation = this.game.relation + this.game.itemValue1;
                     this.game.itemValue1 = 0;
@@ -117,6 +119,7 @@ class Deduction extends Phaser.Scene {
             }
             else if(this.count == 2){
                 if(this.game.data2 != 'Discarded!'){
+                    this.sound.play('sfx_click');
                     this.game.data2 = 'Submitted!';
                     this.game.relation = this.game.relation + this.game.itemValue2;
                     this.game.itemValue2 = 0;
@@ -124,6 +127,7 @@ class Deduction extends Phaser.Scene {
             }
             else if(this.count == 3){
                 if(this.game.data3 != 'Discarded!'){
+                    this.sound.play('sfx_click');
                     this.game.data3 = 'Submitted!';
                     this.game.relation = this.game.relation + this.game.itemValue3;
                     this.game.itemValue3 = 0;
@@ -131,6 +135,7 @@ class Deduction extends Phaser.Scene {
             }
             else if(this.count == 4){
                 if(this.game.data4 != 'Discarded!'){
+                    this.sound.play('sfx_click');
                     this.game.data4 = 'Submitted!';
                     this.game.relation = this.game.relation + this.game.itemValue4;
                     this.game.itemValue4 = 0;
@@ -138,6 +143,7 @@ class Deduction extends Phaser.Scene {
             }
             else if(this.count == 5){
                 if(this.game.data5 != 'Discarded!'){
+                    this.sound.play('sfx_click');
                     this.game.data5 = 'Submitted!';
                     this.game.relation = this.game.relation + this.game.itemValue5;
                     this.game.itemValue5 = 0;
@@ -156,30 +162,35 @@ class Deduction extends Phaser.Scene {
             game.input.mousePointer.y > 80){
                 if(this.count == 1){
                     if(this.game.data1 != 'Submitted!'){
+                        this.sound.play('sfx_click');
                         this.game.data1 = 'Discarded!';
                         this.game.itemValue1 = 0;
                     }
                 }
                 else if(this.count == 2){
                     if(this.game.data2 != 'Submitted!'){
+                        this.sound.play('sfx_click');
                         this.game.data2 = 'Discarded!';
                         this.game.itemValue2 = 0;
                     }
                 }
                 else if(this.count == 3){
                     if(this.game.data3 != 'Submitted!'){
+                        this.sound.play('sfx_click');
                         this.game.data3 = 'Discarded!';
                         this.game.itemValue3 = 0;
                     }        
                 }
                 else if(this.count == 4){
                     if(this.game.data4 != 'Submitted!'){
+                        this.sound.play('sfx_click');
                         this.game.data4 = 'Discarded!';
                         this.game.itemValue4 = 0;
                     }     
                 }
                 else if(this.count == 5){
                     if(this.game.data5 != 'Submitted!'){
+                        this.sound.play('sfx_click');
                         this.game.data5 = 'Discarded!';
                         this.game.itemValue5 = 0;
                     }     
