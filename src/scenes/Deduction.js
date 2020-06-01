@@ -5,10 +5,15 @@ class Deduction extends Phaser.Scene {
 
     preload(){
         this.load.image('XD', './assets/DeductBlank.png');
+         // Add drone interaction audio
+         this.load.audio('sfx_page', './assets/PageFlip.mp3');
 
     }
 
     create(){
+
+        
+
         // Continue text configs
         let resultConfig = {
             fontFamily: 'Courier',
@@ -65,6 +70,8 @@ class Deduction extends Phaser.Scene {
         // Variable keeps track of what item is being looked at
         var count;
         this.count = 1;
+
+       
     }
         
 
@@ -78,12 +85,14 @@ class Deduction extends Phaser.Scene {
         // Go back one data page
         if(Phaser.Input.Keyboard.JustDown(keyLEFT)){
             if(this.count != 1){
+                this.sound.play('sfx_page');
                 this.count = this.count - 1;
             }
         }
         // Go forward one data page
         else if(Phaser.Input.Keyboard.JustDown(keyRIGHT)){
             if(this.count != 5){
+                this.sound.play('sfx_page');
                 this.count = this.count + 1;
             }
         }
@@ -179,18 +188,23 @@ class Deduction extends Phaser.Scene {
 
         // Change the text displayed based on what page is being viewed
         if(this.count == 1){
+            
             this.itemText.setText(''+this.game.data1);
         }
         else if(this.count == 2){
+            
             this.itemText.setText(''+this.game.data2);
         }
         else if(this.count == 3){
+            
             this.itemText.setText(''+this.game.data3);
         }
         else if(this.count == 4){
+            
             this.itemText.setText(''+this.game.data4);
         }
         else if(this.count == 5){
+            
             this.itemText.setText(''+this.game.data5);
         }
      }
