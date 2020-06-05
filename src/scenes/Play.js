@@ -97,7 +97,7 @@ class Play extends Phaser.Scene {
                 && game.input.mousePointer.y < 260
                 ) {
                     this.test_music.stop();
-                    this.scene.start("dayScene")   // Load into Day Cycle Scene
+                        // Load into Day Cycle Scene
                 }
         
         

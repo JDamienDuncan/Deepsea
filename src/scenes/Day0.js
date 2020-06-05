@@ -9,6 +9,7 @@ class Day0 extends Phaser.Scene {
         this.load.image('roy', './assets/Roy.png'); // Geneva Roy UI Screen
         this.load.image('UI', './assets/BlankUI.png'); // Blank UI Screen
         this.load.audio('sfx_select', './assets/blip_select12.wav'); // Text Chamge Sound Effect
+        this.load.image('arrow', './assets/arrow.png');
     }
 
 
@@ -66,6 +67,8 @@ class Day0 extends Phaser.Scene {
             this.dayfield = this.add.tileSprite(0, 0, 640, 480, 'roy').setOrigin(0, 0);
         }
 
+        this.meter = new Arrow(this, 15, 228, 'arrow', 0, 30).setOrigin(0,0);
+
         // Controls Fadeout/Fadein of the Images
         this.cameras.main.once('camerafadeincomplete', function (camera) {
             //camera.fadeOut(2000);
@@ -86,6 +89,13 @@ class Day0 extends Phaser.Scene {
 
 
     update() {
+        this.meter.y = 228 + ((this.game.relation) * -7);
+        if(this.meter.y < 118){
+            this.meter.y = 118;
+        }
+        else if(this.meter.y > 338){
+            this.meter.y = 338;
+        }
         
         // Restart Game(Used For Testing)
         if (Phaser.Input.Keyboard.JustDown(keyF)) {

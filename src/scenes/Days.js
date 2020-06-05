@@ -5,6 +5,7 @@ class Days extends Phaser.Scene {
 
     preload() {
         // Load the start of the day images
+        this.load.image('arrow', './assets/arrow.png');
         this.load.image('day0', './assets/DeepSea.png');
         this.load.image('day1', './assets/Day1.png');
         this.load.image('day2', './assets/Day2.png');

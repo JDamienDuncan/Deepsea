@@ -9,6 +9,7 @@ class Drone extends Phaser.Scene {
         this.load.image('bot_sprite', './assets/Bot.png');
         this.load.image('marker_sprite', './assets/Marker.png');
         this.load.image('UI', './assets/BlankUI.png');
+        this.load.image('arrow', './assets/arrow.png');
         // Add drone interaction audio
         this.load.audio('sfx_drop', './assets/Click1.mp3');
     }
@@ -40,22 +41,22 @@ class Drone extends Phaser.Scene {
         // Instructional text configs
         let textConfig = {
             fontFamily: 'Courier',
-            fontSize: '18px',
-            backgroundColor: '#000000',
-            color: '#ffffff',
+            fontSize: '22px',
+            
+            color: '#000000',
             align: 'center',
             padding: {
                 top: 5,
                 bottom: 5,
             },
-            fixedWidth: 325
+            fixedWidth: 70
         }
         // Score text configs
         let scoreConfig = {
             fontFamily: 'Courier',
-            fontSize: '20px',
-            backgroundColor: '#000000',
-            color: '#ffffff',
+            fontSize: '26px',
+            
+            color: '#000000',
             align: 'center',
             padding: {
                 top: 5,
@@ -83,9 +84,10 @@ class Drone extends Phaser.Scene {
         this.cameras.main.fadeIn(2500);
         
         // Add text to screen
-        this.droneTitle = this.add.text(300, 10, 'Drag Each Drone to a Location!', textConfig);
-        this.droneTitle = this.add.text(300, 40, 'Press -Space- to reset Drones!', textConfig);
-        this.droneTitle = this.add.text(300, 70, 'Press -X- to send the Drones!', textConfig);
+        this.droneTitle = this.add.text(346, 432, 'SEND', textConfig);
+        this.droneTitle = this.add.text(220, 432, 'RESET', textConfig);
+        //this.droneTitle = this.add.text(300, 70, 'Press -X- to send the Drones!', textConfig);
+        this.meter = new Arrow(this, 15, 228, 'arrow', 0, 30).setOrigin(0,0);
         
 
         // Add counters
@@ -101,10 +103,21 @@ class Drone extends Phaser.Scene {
         this.bot03 = new Bot(this, 290, 340, 'bot_sprite', 0, 30).setOrigin(0,0);
         this.bot04 = new Bot(this, 370, 340, 'bot_sprite', 0, 30).setOrigin(0,0);
         this.bot05 = new Bot(this, 450, 340, 'bot_sprite', 0, 30).setOrigin(0,0);
+
+        // Buttons for UI
+        this.sendButton = new TextButton(this, 332, 430, '          \n          ', game.buttonConfig, () => {this.sendDrones()});
+        this.resetButton = new TextButton(this, 203, 430, '          \n          ', game.buttonConfig, () => {this.resetDrones()});
      }
 
 
     update() {
+        this.meter.y = 228 + ((this.game.relation) * -7);
+        if(this.meter.y < 118){
+            this.meter.y = 118;
+        }
+        else if(this.meter.y > 338){
+            this.meter.y = 338;
+        }
         
         // Checks if mouse should be dragging a drone
         // and sets the drone x/y to the mouse x/y
@@ -357,17 +370,20 @@ class Drone extends Phaser.Scene {
             this.counter05.setText(''+this.score5);
         }
         // Send Drones but only when all 5 are assigned
-        if (Phaser.Input.Keyboard.JustDown(keyX) && (this.score1+this.score2+this.score3+this.score4+this.score5) == 5) {
+        
+
+    }
+
+    sendDrones(){
+        if((this.score1+this.score2+this.score3+this.score4+this.score5) == 5){
             this.sound.play('sfx_drop');
             this.scene.start("deductionScene"); // Load into the deduction scene
-            
         }
+    }
+     
 
-        // Reset Drones by reloading drone scene
-        if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
-            this.scene.start("droneScene");
-        }
-
+    resetDrones(){
+        this.scene.start("droneScene");
     }
 
     // Mouse and bot interaction check

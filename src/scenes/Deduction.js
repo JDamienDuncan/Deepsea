@@ -4,7 +4,10 @@ class Deduction extends Phaser.Scene {
     }
 
     preload(){
-        this.load.image('XD', './assets/DeductBlank.png');
+        this.load.image('UI', './assets/BlankUI.png');
+        this.load.image('BookUI', './assets/blank_book.png');
+        this.load.image('arrow', './assets/arrow.png');
+        
          // Add drone interaction audio
          this.load.audio('sfx_page', './assets/PageFlip.mp3');
          this.load.audio('sfx_click', './assets/Click2.mp3');
@@ -42,8 +45,12 @@ class Deduction extends Phaser.Scene {
             fixedWidth: 400
         }
 
-        // Load Background
-        this.dayfield = this.add.tileSprite(0, 0, 640, 480, 'XD').setOrigin(0, 0);
+        
+
+        // Load Background/meter
+        this.dayfield = this.add.tileSprite(0, 0, 640, 480, 'UI').setOrigin(0, 0);
+        this.deductfield = this.add.tileSprite(0, 0, 640, 480, 'BookUI').setOrigin(0, 0);
+        this.meter = new Arrow(this, 15, 228, 'arrow', 0, 30).setOrigin(0,0);
 
         // Item Arrays used to fill data 
         var uselessData;
@@ -72,132 +79,136 @@ class Deduction extends Phaser.Scene {
         var count;
         this.count = 1;
 
+        // Buttons For Display
+        this.leftArrow = new TextButton(this, 100, 222, '      \n       ', game.buttonConfig, () => {this.decreasePage(),this.updatePage()});
+        this.rightArrow = new TextButton(this, 495, 222, '       \n       ', game.buttonConfig, () => {this.increasePage(),this.updatePage()});
+        this.saveButton = new TextButton(this, 97, 85, '                        \n                        ', game.buttonConfig, () => {this.saveThis(),this.updatePage()});
+        this.discardButton = new TextButton(this, 355, 85, '                        \n                        ', game.buttonConfig, () => {this.discardThis(),this.updatePage()});
+
        
     }
         
 
     update(){
+        this.meter.y = 228 + ((this.game.relation) * -7);
+        if(this.meter.y < 118){
+            this.meter.y = 118;
+        }
+        else if(this.meter.y > 338){
+            this.meter.y = 338;
+        }
 
         // Load into conversation scene
         if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
             console.log(this.game.relation);
             this.scene.start("dialogueScene");
         }
-        // Go back one data page
-        if(Phaser.Input.Keyboard.JustDown(keyLEFT)){
-            if(this.count != 1){
-                this.sound.play('sfx_page');
-                this.count = this.count - 1;
+        
+    }
+
+    // Discard Data of Current Page
+    discardThis(){
+        if(this.count == 1){
+            if(this.game.data1 != 'Submitted!'){
+                this.sound.play('sfx_click');
+                this.game.data1 = 'Discarded!';
+                this.game.itemValue1 = 0;
             }
         }
-        // Go forward one data page
-        else if(Phaser.Input.Keyboard.JustDown(keyRIGHT)){
-            if(this.count != 5){
-                this.sound.play('sfx_page');
-                this.count = this.count + 1;
+        else if(this.count == 2){
+            if(this.game.data2 != 'Submitted!'){
+                this.sound.play('sfx_click');
+                this.game.data2 = 'Discarded!';
+                this.game.itemValue2 = 0;
             }
+        }
+        else if(this.count == 3){
+            if(this.game.data3 != 'Submitted!'){
+                this.sound.play('sfx_click');
+                this.game.data3 = 'Discarded!';
+                this.game.itemValue3 = 0;
+            }        
+        }
+        else if(this.count == 4){
+            if(this.game.data4 != 'Submitted!'){
+                this.sound.play('sfx_click');
+                this.game.data4 = 'Discarded!';
+                this.game.itemValue4 = 0;
+            }     
+        }
+        else if(this.count == 5){
+            if(this.game.data5 != 'Submitted!'){
+                this.sound.play('sfx_click');
+                this.game.data5 = 'Discarded!';
+                this.game.itemValue5 = 0;
+            }     
         }
 
-        // Handles when data needs to be submitted.
-        // When the keep button is pressed, the itemValue
-        // is added to the relation score and then set to 
-        // zero. The data variable is also set to submitted
-        // to show that data has already been processed
-        if(!(game.input.mousePointer.leftButtonReleased()) &&
-            game.input.mousePointer.x < 288 && 
-            game.input.mousePointer.x > 96 && 
-            game.input.mousePointer.y < 128 &&
-            game.input.mousePointer.y > 80){
-                
-            if(this.count == 1){
-                if(this.game.data1 != 'Discarded!'){
-                    this.sound.play('sfx_click');
-                    this.game.data1 = 'Submitted!';
-                    this.game.relation = this.game.relation + this.game.itemValue1;
-                    this.game.itemValue1 = 0;
-                }
-            }
-            else if(this.count == 2){
-                if(this.game.data2 != 'Discarded!'){
-                    this.sound.play('sfx_click');
-                    this.game.data2 = 'Submitted!';
-                    this.game.relation = this.game.relation + this.game.itemValue2;
-                    this.game.itemValue2 = 0;
-                }
-            }
-            else if(this.count == 3){
-                if(this.game.data3 != 'Discarded!'){
-                    this.sound.play('sfx_click');
-                    this.game.data3 = 'Submitted!';
-                    this.game.relation = this.game.relation + this.game.itemValue3;
-                    this.game.itemValue3 = 0;
-                }        
-            }
-            else if(this.count == 4){
-                if(this.game.data4 != 'Discarded!'){
-                    this.sound.play('sfx_click');
-                    this.game.data4 = 'Submitted!';
-                    this.game.relation = this.game.relation + this.game.itemValue4;
-                    this.game.itemValue4 = 0;
-                }     
-            }
-            else if(this.count == 5){
-                if(this.game.data5 != 'Discarded!'){
-                    this.sound.play('sfx_click');
-                    this.game.data5 = 'Submitted!';
-                    this.game.relation = this.game.relation + this.game.itemValue5;
-                    this.game.itemValue5 = 0;
-                }     
+     }
+
+    // Save Data of Current Page
+    saveThis(){
+        if(this.count == 1){
+            if(this.game.data1 != 'Discarded!'){
+                this.sound.play('sfx_click');
+                this.game.data1 = 'Submitted!';
+                this.game.relation = this.game.relation + this.game.itemValue1;
+                this.game.itemValue1 = 0;
             }
         }
-
-        // Handles when data needs to be discarded
-        // When the discarded button is clicked, the
-        // data is set to 'Discarded' and the relation
-        // value is set to 0
-        else if(!(game.input.mousePointer.leftButtonReleased()) &&
-            game.input.mousePointer.x < 545 && 
-            game.input.mousePointer.x > 350 && 
-            game.input.mousePointer.y < 128 &&
-            game.input.mousePointer.y > 80){
-                if(this.count == 1){
-                    if(this.game.data1 != 'Submitted!'){
-                        this.sound.play('sfx_click');
-                        this.game.data1 = 'Discarded!';
-                        this.game.itemValue1 = 0;
-                    }
-                }
-                else if(this.count == 2){
-                    if(this.game.data2 != 'Submitted!'){
-                        this.sound.play('sfx_click');
-                        this.game.data2 = 'Discarded!';
-                        this.game.itemValue2 = 0;
-                    }
-                }
-                else if(this.count == 3){
-                    if(this.game.data3 != 'Submitted!'){
-                        this.sound.play('sfx_click');
-                        this.game.data3 = 'Discarded!';
-                        this.game.itemValue3 = 0;
-                    }        
-                }
-                else if(this.count == 4){
-                    if(this.game.data4 != 'Submitted!'){
-                        this.sound.play('sfx_click');
-                        this.game.data4 = 'Discarded!';
-                        this.game.itemValue4 = 0;
-                    }     
-                }
-                else if(this.count == 5){
-                    if(this.game.data5 != 'Submitted!'){
-                        this.sound.play('sfx_click');
-                        this.game.data5 = 'Discarded!';
-                        this.game.itemValue5 = 0;
-                    }     
-                }
+        else if(this.count == 2){
+            if(this.game.data2 != 'Discarded!'){
+                this.sound.play('sfx_click');
+                this.game.data2 = 'Submitted!';
+                this.game.relation = this.game.relation + this.game.itemValue2;
+                this.game.itemValue2 = 0;
+            }
+        }
+        else if(this.count == 3){
+            if(this.game.data3 != 'Discarded!'){
+                this.sound.play('sfx_click');
+                this.game.data3 = 'Submitted!';
+                this.game.relation = this.game.relation + this.game.itemValue3;
+                this.game.itemValue3 = 0;
+            }        
+        }
+        else if(this.count == 4){
+            if(this.game.data4 != 'Discarded!'){
+                this.sound.play('sfx_click');
+                this.game.data4 = 'Submitted!';
+                this.game.relation = this.game.relation + this.game.itemValue4;
+                this.game.itemValue4 = 0;
+            }     
+        }
+        else if(this.count == 5){
+            if(this.game.data5 != 'Discarded!'){
+                this.sound.play('sfx_click');
+                this.game.data5 = 'Submitted!';
+                this.game.relation = this.game.relation + this.game.itemValue5;
+                this.game.itemValue5 = 0;
+            }     
         }
 
-        // Change the text displayed based on what page is being viewed
+     }
+
+     increasePage(){
+        if(this.count != 5){
+            this.sound.play('sfx_page');
+            this.count = this.count + 1;
+        }
+
+     }
+
+     decreasePage(){
+        if(this.count != 1){
+            this.sound.play('sfx_page');
+            this.count = this.count - 1;
+        }
+
+     }
+
+    // Changes Page Displayed
+    updatePage(){
         if(this.count == 1){
             
             this.itemText.setText(''+this.game.data1);
@@ -218,8 +229,8 @@ class Deduction extends Phaser.Scene {
             
             this.itemText.setText(''+this.game.data5);
         }
-     }
 
+     }
 
     /*
     The getData function is used to give random data elements to the global variables.
@@ -246,11 +257,11 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot1Loc > 75 && this.game.bot1Loc <= 95){
                     this.game.data1 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue1 = -1;
+                    this.game.itemValue1 = -2;
                 }
                 else if(this.game.bot1Loc > 95){
                     this.game.data1 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue1 = -2;
+                    this.game.itemValue1 = -4;
                 }
             }
             else if(this.game.bot1Loc == 4){
@@ -261,22 +272,22 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot1Loc > 10 && this.game.bot1Loc <= 95){
                     this.game.data1 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue1 = -1;
+                    this.game.itemValue1 = -2;
                 }
                 else if(this.game.bot1Loc > 95){
                     this.game.data1 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue1 = -2;
+                    this.game.itemValue1 = -4;
                 }
             }
             else if(this.game.bot1Loc == 5){
                 this.game.bot1Loc = Math.floor(Math.random() * 100) + 1;
                 if(this.game.bot1Loc <= 90){
                     this.game.data1 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue1 = -1;
+                    this.game.itemValue1 = -2;
                 }
                 else if(this.game.bot1Loc > 90){
                     this.game.data1 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue1 = -2;
+                    this.game.itemValue1 = -4;
                 }
             }
 
@@ -289,11 +300,11 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot2Loc > 75 && this.game.bot2Loc <= 95){
                     this.game.data2 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue2 = -1;
+                    this.game.itemValue2 = -2;
                 }
                 else if(this.game.bot2Loc > 95){
                     this.game.data2 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue2 = -2;
+                    this.game.itemValue2 = -4;
                 }
             }
             else if(this.game.bot2Loc == 4){
@@ -304,22 +315,22 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot2Loc > 10 && this.game.bot2Loc <= 95){
                     this.game.data2 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue2 = -1;
+                    this.game.itemValue2 = -2;
                 }
                 else if(this.game.bot2Loc > 95){
                     this.game.data2 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue2 = -2;
+                    this.game.itemValue2 = -4;
                 }
             }
             else if(this.game.bot2Loc == 5){
                 this.game.bot2Loc = Math.floor(Math.random() * 100) + 1;
                 if(this.game.bot2Loc <= 90){
                     this.game.data2 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue2 = -1;
+                    this.game.itemValue2 = -4;
                 }
                 else if(this.game.bot2Loc > 90){
                     this.game.data2 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue2 = -2;
+                    this.game.itemValue2 = -4;
                 }
             }
             // Item for Bot 3
@@ -331,11 +342,11 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot3Loc > 75 && this.game.bot3Loc <= 95){
                     this.game.data3 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue3 = -1;
+                    this.game.itemValue3 = -2;
                 }
                 else if(this.game.bot3Loc > 95){
                     this.game.data3 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue3 = -2;
+                    this.game.itemValue3 = -4;
                 }
             }
             else if(this.game.bot3Loc == 4){
@@ -346,22 +357,22 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot3Loc > 10 && this.game.bot2Loc <= 95){
                     this.game.data3 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue3 = -1;
+                    this.game.itemValue3 = -2;
                 }
                 else if(this.game.bot3Loc > 95){
                     this.game.data3 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue3 = -2;
+                    this.game.itemValue3 = -4;
                 }
             }
             else if(this.game.bot3Loc == 5){
                 this.game.bot3Loc = Math.floor(Math.random() * 100) + 1;
                 if(this.game.bot3Loc <= 90){
                     this.game.data3 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue3 = -1;
+                    this.game.itemValue3 = -2;
                 }
                 else if(this.game.bot3Loc > 90){
                     this.game.data3 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue3 = -2;
+                    this.game.itemValue3 = -4;
                 }
             }
             // Item for Bot 4
@@ -373,11 +384,11 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot4Loc > 75 && this.game.bot4Loc <= 95){
                     this.game.data4 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue4 = -1;
+                    this.game.itemValue4 = -2;
                 }
                 else if(this.game.bot4Loc > 95){
                     this.game.data4 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue4 = -2;
+                    this.game.itemValue4 = -4;
                 }
             }
             else if(this.game.bot4Loc == 4){
@@ -388,22 +399,22 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot4Loc > 10 && this.game.bot4Loc <= 95){
                     this.game.data4 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue4 = -1;
+                    this.game.itemValue4 = -2;
                 }
                 else if(this.game.bot4Loc > 95){
                     this.game.data4 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue4 = -2;
+                    this.game.itemValue4 = -4;
                 }
             }
             else if(this.game.bot4Loc == 5){
                 this.game.bot4Loc = Math.floor(Math.random() * 100) + 1;
                 if(this.game.bot4Loc <= 90){
                     this.game.data4= this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue4 = -1;
+                    this.game.itemValue4 = -2;
                 }
                 else if(this.game.bot4Loc > 90){
                     this.game.data4 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue4 = -2;
+                    this.game.itemValue4 = -4;
                 }
             }
             // Item for Bot 5
@@ -415,11 +426,11 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot5Loc > 75 && this.game.bot5Loc <= 95){
                     this.game.data5 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue5 = -1;
+                    this.game.itemValue5 = -2;
                 }
                 else if(this.game.bot5Loc > 95){
                     this.game.data5 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue5 = -2;
+                    this.game.itemValue5 = -4;
                 }
             }
             else if(this.game.bot5Loc == 4){
@@ -430,22 +441,22 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot5Loc > 10 && this.game.bot5Loc <= 95){
                     this.game.data5 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue5 = -1;
+                    this.game.itemValue5 = -2;
                 }
                 else if(this.game.bot5Loc > 95){
                     this.game.data5 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue5 = -2;
+                    this.game.itemValue5 = -4;
                 }
             }
             else if(this.game.bot5Loc == 5){
                 this.game.bot5Loc = Math.floor(Math.random() * 100) + 1;
                 if(this.game.bot5Loc <= 90){
                     this.game.data5 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue5 = -1;
+                    this.game.itemValue5 = -2;
                 }
                 else if(this.game.bot5Loc > 90){
                     this.game.data5 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue5 = -2;
+                    this.game.itemValue5 = -4;
                 }
             }
         }
@@ -460,11 +471,11 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot1Loc > 75 && this.game.bot1Loc <= 95){
                     this.game.data1 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue1 = -1;
+                    this.game.itemValue1 = -2;
                 }
                 else if(this.game.bot1Loc > 95){
                     this.game.data1 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue1 = -2;
+                    this.game.itemValue1 = -4;
                 }
             }
             else if(this.game.bot1Loc == 4){
@@ -475,22 +486,22 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot1Loc > 10 && this.game.bot1Loc <= 95){
                     this.game.data1 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue1 = -1;
+                    this.game.itemValue1 = -2;
                 }
                 else if(this.game.bot1Loc > 95){
                     this.game.data1 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue1 = -2;
+                    this.game.itemValue1 = -4;
                 }
             }
             else if(this.game.bot1Loc == 5){
                 this.game.bot1Loc = Math.floor(Math.random() * 100) + 1;
                 if(this.game.bot1Loc <= 90){
                     this.game.data1 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue1 = -1;
+                    this.game.itemValue1 = -2;
                 }
                 else if(this.game.bot1Loc > 90){
                     this.game.data1 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue1 = -2;
+                    this.game.itemValue1 = -4;
                 }
             }
 
@@ -503,11 +514,11 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot2Loc > 75 && this.game.bot2Loc <= 95){
                     this.game.data2 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue2 = -1;
+                    this.game.itemValue2 = -2;
                 }
                 else if(this.game.bot2Loc > 95){
                     this.game.data2 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue2 = -2;
+                    this.game.itemValue2 = -4;
                 }
             }
             else if(this.game.bot2Loc == 4){
@@ -518,22 +529,22 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot2Loc > 10 && this.game.bot2Loc <= 95){
                     this.game.data2 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue2 = -1;
+                    this.game.itemValue2 = -2;
                 }
                 else if(this.game.bot2Loc > 95){
                     this.game.data2 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue2 = -2;
+                    this.game.itemValue2 = -4;
                 }
             }
             else if(this.game.bot2Loc == 5){
                 this.game.bot2Loc = Math.floor(Math.random() * 100) + 1;
                 if(this.game.bot2Loc <= 90){
                     this.game.data2 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue2 = -1;
+                    this.game.itemValue2 = -2;
                 }
                 else if(this.game.bot2Loc > 90){
                     this.game.data2 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue2 = -2;
+                    this.game.itemValue2 = -4;
                 }
             }
             // Item for Bot 3
@@ -545,11 +556,11 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot3Loc > 75 && this.game.bot3Loc <= 95){
                     this.game.data3 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue3 = -1;
+                    this.game.itemValue3 = -2;
                 }
                 else if(this.game.bot3Loc > 95){
                     this.game.data3 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue3 = -2;
+                    this.game.itemValue3 = -4;
                 }
             }
             else if(this.game.bot3Loc == 4){
@@ -560,22 +571,22 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot3Loc > 10 && this.game.bot2Loc <= 95){
                     this.game.data3 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue3 = -1;
+                    this.game.itemValue3 = -2;
                 }
                 else if(this.game.bot3Loc > 95){
                     this.game.data3 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue3 = -2;
+                    this.game.itemValue3 = -4;
                 }
             }
             else if(this.game.bot3Loc == 5){
                 this.game.bot3Loc = Math.floor(Math.random() * 100) + 1;
                 if(this.game.bot3Loc <= 90){
                     this.game.data3 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue3 = -1;
+                    this.game.itemValue3 = -2;
                 }
                 else if(this.game.bot3Loc > 90){
                     this.game.data3 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue3 = -2;
+                    this.game.itemValue3 = -4;
                 }
             }
             // Item for Bot 4
@@ -587,11 +598,11 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot4Loc > 75 && this.game.bot4Loc <= 95){
                     this.game.data4 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue4 = -1;
+                    this.game.itemValue4 = -2;
                 }
                 else if(this.game.bot4Loc > 95){
                     this.game.data4 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue4 = -2;
+                    this.game.itemValue4 = -4;
                 }
             }
             else if(this.game.bot4Loc == 4){
@@ -602,22 +613,22 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot4Loc > 10 && this.game.bot4Loc <= 95){
                     this.game.data4 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue4 = -1;
+                    this.game.itemValue4 = -2;
                 }
                 else if(this.game.bot4Loc > 95){
                     this.game.data4 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue4 = -2;
+                    this.game.itemValue4 = -4;
                 }
             }
             else if(this.game.bot4Loc == 5){
                 this.game.bot4Loc = Math.floor(Math.random() * 100) + 1;
                 if(this.game.bot4Loc <= 90){
                     this.game.data4= this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue4 = -1;
+                    this.game.itemValue4 = -2;
                 }
                 else if(this.game.bot4Loc > 90){
                     this.game.data4 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue4 = -2;
+                    this.game.itemValue4 = -4;
                 }
             }
             // Item for Bot 5
@@ -629,11 +640,11 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot5Loc > 75 && this.game.bot5Loc <= 95){
                     this.game.data5 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue5 = -1;
+                    this.game.itemValue5 = -2;
                 }
                 else if(this.game.bot5Loc > 95){
                     this.game.data5 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue5 = -2;
+                    this.game.itemValue5 = -4;
                 }
             }
             else if(this.game.bot5Loc == 4){
@@ -644,22 +655,22 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot5Loc > 10 && this.game.bot5Loc <= 95){
                     this.game.data5 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue5 = -1;
+                    this.game.itemValue5 = -2;
                 }
                 else if(this.game.bot5Loc > 95){
                     this.game.data5 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue5 = -2;
+                    this.game.itemValue5 = -4;
                 }
             }
             else if(this.game.bot5Loc == 5){
                 this.game.bot5Loc = Math.floor(Math.random() * 100) + 1;
                 if(this.game.bot5Loc <= 90){
                     this.game.data5 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue5 = -1;
+                    this.game.itemValue5 = -2;
                 }
                 else if(this.game.bot5Loc > 90){
                     this.game.data5 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue5 = -2;
+                    this.game.itemValue5 = -4;
                 }
             }
         }
@@ -674,11 +685,11 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot1Loc > 75 && this.game.bot1Loc <= 95){
                     this.game.data1 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue1 = -1;
+                    this.game.itemValue1 = -2;
                 }
                 else if(this.game.bot1Loc > 95){
                     this.game.data1 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue1 = -2;
+                    this.game.itemValue1 = -4;
                 }
             }
             else if(this.game.bot1Loc == 4){
@@ -689,22 +700,22 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot1Loc > 10 && this.game.bot1Loc <= 95){
                     this.game.data1 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue1 = -1;
+                    this.game.itemValue1 = -2;
                 }
                 else if(this.game.bot1Loc > 95){
                     this.game.data1 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue1 = -2;
+                    this.game.itemValue1 = -4;
                 }
             }
             else if(this.game.bot1Loc == 5){
                 this.game.bot1Loc = Math.floor(Math.random() * 100) + 1;
                 if(this.game.bot1Loc <= 90){
                     this.game.data1 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue1 = -1;
+                    this.game.itemValue1 = -2;
                 }
                 else if(this.game.bot1Loc > 90){
                     this.game.data1 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue1 = -2;
+                    this.game.itemValue1 = -4;
                 }
             }
 
@@ -717,11 +728,11 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot2Loc > 75 && this.game.bot2Loc <= 95){
                     this.game.data2 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue2 = -1;
+                    this.game.itemValue2 = -2;
                 }
                 else if(this.game.bot2Loc > 95){
                     this.game.data2 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue2 = -2;
+                    this.game.itemValue2 = -4;
                 }
             }
             else if(this.game.bot2Loc == 4){
@@ -732,22 +743,22 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot2Loc > 10 && this.game.bot2Loc <= 95){
                     this.game.data2 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue2 = -1;
+                    this.game.itemValue2 = -2;
                 }
                 else if(this.game.bot2Loc > 95){
                     this.game.data2 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue2 = -2;
+                    this.game.itemValue2 = -4;
                 }
             }
             else if(this.game.bot2Loc == 5){
                 this.game.bot2Loc = Math.floor(Math.random() * 100) + 1;
                 if(this.game.bot2Loc <= 90){
                     this.game.data2 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue2 = -1;
+                    this.game.itemValue2 = -2;
                 }
                 else if(this.game.bot2Loc > 90){
                     this.game.data2 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue2 = -2;
+                    this.game.itemValue2 = -4;
                 }
             }
             // Item for Bot 3
@@ -759,11 +770,11 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot3Loc > 75 && this.game.bot3Loc <= 95){
                     this.game.data3 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue3 = -1;
+                    this.game.itemValue3 = -2;
                 }
                 else if(this.game.bot3Loc > 95){
                     this.game.data3 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue3 = -2;
+                    this.game.itemValue3 = -4;
                 }
             }
             else if(this.game.bot3Loc == 4){
@@ -774,22 +785,22 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot3Loc > 10 && this.game.bot2Loc <= 95){
                     this.game.data3 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue3 = -1;
+                    this.game.itemValue3 = -2;
                 }
                 else if(this.game.bot3Loc > 95){
                     this.game.data3 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue3 = -2;
+                    this.game.itemValue3 = -4;
                 }
             }
             else if(this.game.bot3Loc == 5){
                 this.game.bot3Loc = Math.floor(Math.random() * 100) + 1;
                 if(this.game.bot3Loc <= 90){
                     this.game.data3 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue3 = -1;
+                    this.game.itemValue3 = -2;
                 }
                 else if(this.game.bot3Loc > 90){
                     this.game.data3 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue3 = -2;
+                    this.game.itemValue3 = -4;
                 }
             }
             // Item for Bot 4
@@ -801,11 +812,11 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot4Loc > 75 && this.game.bot4Loc <= 95){
                     this.game.data4 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue4 = -1;
+                    this.game.itemValue4 = -2;
                 }
                 else if(this.game.bot4Loc > 95){
                     this.game.data4 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue4 = -2;
+                    this.game.itemValue4 = -4;
                 }
             }
             else if(this.game.bot4Loc == 4){
@@ -816,22 +827,22 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot4Loc > 10 && this.game.bot4Loc <= 95){
                     this.game.data4 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue4 = -1;
+                    this.game.itemValue4 = -2;
                 }
                 else if(this.game.bot4Loc > 95){
                     this.game.data4 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue4 = -2;
+                    this.game.itemValue4 = -4;
                 }
             }
             else if(this.game.bot4Loc == 5){
                 this.game.bot4Loc = Math.floor(Math.random() * 100) + 1;
                 if(this.game.bot4Loc <= 90){
                     this.game.data4= this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue4 = -1;
+                    this.game.itemValue4 = -2;
                 }
                 else if(this.game.bot4Loc > 90){
                     this.game.data4 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue4 = -2;
+                    this.game.itemValue4 = -4;
                 }
             }
             // Item for Bot 5
@@ -843,11 +854,11 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot5Loc > 75 && this.game.bot5Loc <= 95){
                     this.game.data5 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue5 = -1;
+                    this.game.itemValue5 = -2;
                 }
                 else if(this.game.bot5Loc > 95){
                     this.game.data5 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue5 = -2;
+                    this.game.itemValue5 = -4;
                 }
             }
             else if(this.game.bot5Loc == 4){
@@ -858,22 +869,22 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot5Loc > 10 && this.game.bot5Loc <= 95){
                     this.game.data5 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue5 = -1;
+                    this.game.itemValue5 = -2;
                 }
                 else if(this.game.bot5Loc > 95){
                     this.game.data5 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue5 = -2;
+                    this.game.itemValue5 = -4;
                 }
             }
             else if(this.game.bot5Loc == 5){
                 this.game.bot5Loc = Math.floor(Math.random() * 100) + 1;
                 if(this.game.bot5Loc <= 90){
                     this.game.data5 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue5 = -1;
+                    this.game.itemValue5 = -2;
                 }
                 else if(this.game.bot5Loc > 90){
                     this.game.data5 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue5 = -2;
+                    this.game.itemValue5 = -4;
                 }
             }
         }
@@ -888,11 +899,11 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot1Loc > 75 && this.game.bot1Loc <= 95){
                     this.game.data1 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue1 = -1;
+                    this.game.itemValue1 = -2;
                 }
                 else if(this.game.bot1Loc > 95){
                     this.game.data1 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue1 = -2;
+                    this.game.itemValue1 = -4;
                 }
             }
             else if(this.game.bot1Loc == 4){
@@ -903,22 +914,22 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot1Loc > 10 && this.game.bot1Loc <= 95){
                     this.game.data1 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue1 = -1;
+                    this.game.itemValue1 = -2;
                 }
                 else if(this.game.bot1Loc > 95){
                     this.game.data1 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue1 = -2;
+                    this.game.itemValue1 = -4;
                 }
             }
             else if(this.game.bot1Loc == 5){
                 this.game.bot1Loc = Math.floor(Math.random() * 100) + 1;
                 if(this.game.bot1Loc <= 90){
                     this.game.data1 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue1 = -1;
+                    this.game.itemValue1 = -2;
                 }
                 else if(this.game.bot1Loc > 90){
                     this.game.data1 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue1 = -2;
+                    this.game.itemValue1 = -4;
                 }
             }
 
@@ -931,11 +942,11 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot2Loc > 75 && this.game.bot2Loc <= 95){
                     this.game.data2 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue2 = -1;
+                    this.game.itemValue2 = -2;
                 }
                 else if(this.game.bot2Loc > 95){
                     this.game.data2 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue2 = -2;
+                    this.game.itemValue2 = -4;
                 }
             }
             else if(this.game.bot2Loc == 4){
@@ -946,22 +957,22 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot2Loc > 10 && this.game.bot2Loc <= 95){
                     this.game.data2 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue2 = -1;
+                    this.game.itemValue2 = -2;
                 }
                 else if(this.game.bot2Loc > 95){
                     this.game.data2 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue2 = -2;
+                    this.game.itemValue2 = -4;
                 }
             }
             else if(this.game.bot2Loc == 5){
                 this.game.bot2Loc = Math.floor(Math.random() * 100) + 1;
                 if(this.game.bot2Loc <= 90){
                     this.game.data2 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue2 = -1;
+                    this.game.itemValue2 = -2;
                 }
                 else if(this.game.bot2Loc > 90){
                     this.game.data2 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue2 = -2;
+                    this.game.itemValue2 = -4;
                 }
             }
             // Item for Bot 3
@@ -973,11 +984,11 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot3Loc > 75 && this.game.bot3Loc <= 95){
                     this.game.data3 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue3 = -1;
+                    this.game.itemValue3 = -2;
                 }
                 else if(this.game.bot3Loc > 95){
                     this.game.data3 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue3 = -2;
+                    this.game.itemValue3 = -4;
                 }
             }
             else if(this.game.bot3Loc == 4){
@@ -988,22 +999,22 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot3Loc > 10 && this.game.bot2Loc <= 95){
                     this.game.data3 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue3 = -1;
+                    this.game.itemValue3 = -2;
                 }
                 else if(this.game.bot3Loc > 95){
                     this.game.data3 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue3 = -2;
+                    this.game.itemValue3 = -4;
                 }
             }
             else if(this.game.bot3Loc == 5){
                 this.game.bot3Loc = Math.floor(Math.random() * 100) + 1;
                 if(this.game.bot3Loc <= 90){
                     this.game.data3 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue3 = -1;
+                    this.game.itemValue3 = -2;
                 }
                 else if(this.game.bot3Loc > 90){
                     this.game.data3 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue3 = -2;
+                    this.game.itemValue3 = -4;
                 }
             }
             // Item for Bot 4
@@ -1015,11 +1026,11 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot4Loc > 75 && this.game.bot4Loc <= 95){
                     this.game.data4 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue4 = -1;
+                    this.game.itemValue4 = -2;
                 }
                 else if(this.game.bot4Loc > 95){
                     this.game.data4 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue4 = -2;
+                    this.game.itemValue4 = -4;
                 }
             }
             else if(this.game.bot4Loc == 4){
@@ -1030,22 +1041,22 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot4Loc > 10 && this.game.bot4Loc <= 95){
                     this.game.data4 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue4 = -1;
+                    this.game.itemValue4 = -2;
                 }
                 else if(this.game.bot4Loc > 95){
                     this.game.data4 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue4 = -2;
+                    this.game.itemValue4 = -4;
                 }
             }
             else if(this.game.bot4Loc == 5){
                 this.game.bot4Loc = Math.floor(Math.random() * 100) + 1;
                 if(this.game.bot4Loc <= 90){
                     this.game.data4= this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue4 = -1;
+                    this.game.itemValue4 = -2;
                 }
                 else if(this.game.bot4Loc > 90){
                     this.game.data4 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue4 = -2;
+                    this.game.itemValue4 = -4;
                 }
             }
             // Item for Bot 5
@@ -1057,11 +1068,11 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot5Loc > 75 && this.game.bot5Loc <= 95){
                     this.game.data5 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue5 = -1;
+                    this.game.itemValue5 = -2;
                 }
                 else if(this.game.bot5Loc > 95){
                     this.game.data5 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue5 = -2;
+                    this.game.itemValue5 = -4;
                 }
             }
             else if(this.game.bot5Loc == 4){
@@ -1072,22 +1083,22 @@ class Deduction extends Phaser.Scene {
                 }
                 else if(this.game.bot5Loc > 10 && this.game.bot5Loc <= 95){
                     this.game.data5 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue5 = -1;
+                    this.game.itemValue5 = -2;
                 }
                 else if(this.game.bot5Loc > 95){
                     this.game.data5 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue5 = -2;
+                    this.game.itemValue5 = -4;
                 }
             }
             else if(this.game.bot5Loc == 5){
                 this.game.bot5Loc = Math.floor(Math.random() * 100) + 1;
                 if(this.game.bot5Loc <= 90){
                     this.game.data5 = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
-                    this.game.itemValue5 = -1;
+                    this.game.itemValue5 = -2;
                 }
                 else if(this.game.bot5Loc > 90){
                     this.game.data5 = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
-                    this.game.itemValue5 = -2;
+                    this.game.itemValue5 = -4;
                 }
             }
         }
