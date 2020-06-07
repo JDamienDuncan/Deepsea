@@ -53,12 +53,12 @@ class Analysis extends Phaser.Scene {
         this.meter = new Arrow(this, 15, game.settings.meterY, 'arrow', 0, 30).setOrigin(0,0);
 
         // Item Arrays used to fill data 
-        this.uselessData = ["An Old Boot", "3D Scan of a Cuttlefish", "Broken Rocks", "Angler Fish Eye", "Thermal Scan of Rocks",
-                            "Shark Leftovers", "Audio Recording of\nCuttlefish Mating", "A Chunk of Coral", "An Angry Hermit Crab", 
-                            "A Shriveled Sea Anemone"];
-        this.strangeData = ["Blurred Image of a Hand", "Crackling Audio that\nSounds like Singing", "A Faded Image\nof a Humanoid Shape", 
-                            "A Cuttlefish", "Squid Corpse with a Bite Mark", "An Iridescent Scale", "A Long Fingernail", 
-                            "A Strand of\nGreen Hair", "A Bloody Tooth", "A Photo of Ruins"];
+        this.uselessData = ["An Old Boot", "3D Scan\nof a Cuttlefish", "Broken Rocks", "Angler Fish Eye", "Thermal Scan\nof Rocks",
+                            "Shark Leftovers", "Audio Recording of\nCuttlefish Mating", "A Chunk of Coral", "An Angry\nHermit Crab", 
+                            "A Shriveled\nSea Anemone"];
+        this.strangeData = ["Blurred Image\nof a Hand", "Crackling Audio that\nSounds like Singing", "A Faded Image\nof a Humanoid Shape", 
+                            "A Cuttlefish", "Squid Corpse\nwith a Bite Mark", "An Iridescent Scale", "A Long Fingernail", 
+                            "A Strand of\nGreen Hair", "A Bloody Tooth", "A Photo\nof Ruins"];
         this.usefulData =  [this.getCrinoidData(), this.getPlanktonData(), this.getWaterData(), this.getTrenchData(), this.getCrabData(),
                             this.getAmphipodData(), this.getSnowData(), this.getStarfishData(), this.getWormData(), this.getCucData(),
                             this.getTunicateData()];
@@ -79,7 +79,7 @@ class Analysis extends Phaser.Scene {
         
         
         // Used to progress to next scene
-        this.chatAdv = this.add.text(120, 362, 'CONTINUE', resultConfig);
+        this.add.text(318, 432, 'CONTINUE', resultConfig);
 
         // Variable keeps track of what item is being looked at
         var count;
@@ -92,7 +92,16 @@ class Analysis extends Phaser.Scene {
         this.rightArrow = new TextButton(this, 495, 222, '       \n       ', game.buttonConfig, () => {this.increasePage(),this.updatePage()});
         this.saveButton = new TextButton(this, 97, 85, '                        \n                        ', game.buttonConfig, () => {this.saveThis(),this.updatePage()});
         this.discardButton = new TextButton(this, 355, 85, '                        \n                        ', game.buttonConfig, () => {this.discardThis(),this.updatePage()});
-        this.continueButton = new TextButton(this, 228, 365, '                        ', game.buttonConfig, () => {this.finalize()});
+        this.continueButton = new TextButton(this, 461, 430, '            \n            ', game.buttonConfig, () => {this.finalize()});
+
+        // Displays the status of each item (submitted/discarded)
+        this.statusText = this.add.text(120, 364, '', itemConfig);
+        // Keeps track of the status of each item
+        this.data1Status = '';
+        this.data2Status = '';
+        this.data3Status = '';
+        this.data4Status = '';
+        this.data5Status = '';
 
 
        
@@ -124,45 +133,45 @@ class Analysis extends Phaser.Scene {
     // Discard Data of Current Page
     discardThis(){
         if(this.count == 1){
-            if(this.game.data1 != 'Submitted!' && this.game.data1 != 'Discarded!' ){
+            if(this.data1Status != 'Submitted!' && this.data1Status != 'Discarded!' ){
                 this.sound.play('sfx_click');
-                this.game.data1 = 'Discarded!';
+                this.data1Status = 'Discarded!';
                 this.game.itemValue1 = 0;
                 this.game.relation = this.game.relation - 1;
                 this.choiceCounter = this.choiceCounter + 1; 
             }
         }
         else if(this.count == 2){
-            if(this.game.data2 != 'Submitted!' && this.game.data2 != 'Discarded!' ){
+            if(this.data2Status != 'Submitted!' && this.data2Status != 'Discarded!' ){
                 this.sound.play('sfx_click');
-                this.game.data2 = 'Discarded!';
+                this.data2Status = 'Discarded!';
                 this.game.itemValue2 = 0;
                 this.game.relation = this.game.relation - 1;
                 this.choiceCounter = this.choiceCounter + 1;
             }
         }
         else if(this.count == 3){
-            if(this.game.data3 != 'Submitted!' && this.game.data3 != 'Discarded!' ){
+            if(this.data3Status != 'Submitted!' && this.data3Status != 'Discarded!' ){
                 this.sound.play('sfx_click');
-                this.game.data3 = 'Discarded!';
+                this.data3Status = 'Discarded!';
                 this.game.itemValue3 = 0;
                 this.game.relation = this.game.relation - 1;
                 this.choiceCounter = this.choiceCounter + 1;
             }        
         }
-        else if(this.count == 4){
-            if(this.game.data4 != 'Submitted!' && this.game.data4 != 'Discarded!' ){
+else if(this.count == 4){
+            if(this.data4Status != 'Submitted!' && this.data4Status != 'Discarded!' ){
                 this.sound.play('sfx_click');
-                this.game.data4 = 'Discarded!';
+                this.data4Status = 'Discarded!';
                 this.game.itemValue4 = 0;
                 this.game.relation = this.game.relation - 1;
                 this.choiceCounter = this.choiceCounter + 1;
             }     
         }
         else if(this.count == 5){
-            if(this.game.data5 != 'Submitted!' && this.game.data5 != 'Discarded!' ){
+            if(this.data5Status != 'Submitted!' && this.data5Status != 'Discarded!' ){
                 this.sound.play('sfx_click');
-                this.game.data5 = 'Discarded!';
+                this.data5Status = 'Discarded!';
                 this.game.itemValue5 = 0;
                 this.game.relation = this.game.relation - 1;
                 this.choiceCounter = this.choiceCounter + 1;
@@ -174,45 +183,45 @@ class Analysis extends Phaser.Scene {
     // Save Data of Current Page
     saveThis(){
         if(this.count == 1){
-            if(this.game.data1 != 'Submitted!' && this.game.data1 != 'Discarded!'){
+            if(this.data1Status != 'Submitted!' && this.data1Status != 'Discarded!'){
                 this.sound.play('sfx_click');
-                this.game.data1 = 'Submitted!';
+                this.data1Status = 'Submitted!';
                 this.game.relation = this.game.relation + this.game.itemValue1;
                 this.game.itemValue1 = 0;
                 this.choiceCounter = this.choiceCounter + 1;
             }
         }
         else if(this.count == 2){
-            if(this.game.data2 != 'Discarded!'){
+            if(this.data2Status != 'Discarded!'){
                 this.sound.play('sfx_click');
-                this.game.data2 = 'Submitted!';
+                this.data2Status = 'Submitted!';
                 this.game.relation = this.game.relation + this.game.itemValue2;
                 this.game.itemValue2 = 0;
                 this.choiceCounter = this.choiceCounter + 1;
             }
         }
-        else if(this.game.data != 'Submitted!' && this.count == 3){
-            if(this.game.data3 != 'Submitted!' && this.game.data3 != 'Discarded!'){
+        else if(this.count == 3){
+            if(this.data3Status != 'Submitted!' && this.data3Status != 'Discarded!'){
                 this.sound.play('sfx_click');
-                this.game.data3 = 'Submitted!';
+                this.data3Status = 'Submitted!';
                 this.game.relation = this.game.relation + this.game.itemValue3;
                 this.game.itemValue3 = 0;
                 this.choiceCounter = this.choiceCounter + 1;
             }        
         }
-        else if(this.count == 4){
-            if(this.game.data4 != 'Submitted!' && this.game.data4 != 'Discarded!'){
+else if(this.count == 4){
+            if(this.data4Status != 'Submitted!' && this.data4Status != 'Discarded!'){
                 this.sound.play('sfx_click');
-                this.game.data4 = 'Submitted!';
+                this.data4Status = 'Submitted!';
                 this.game.relation = this.game.relation + this.game.itemValue4;
                 this.game.itemValue4 = 0;
                 this.choiceCounter = this.choiceCounter + 1;
             }     
         }
         else if(this.count == 5){
-            if(this.game.data5 != 'Submitted!' && this.game.data5 != 'Discarded!'){
+            if(this.data5Status != 'Submitted!' && this.data5Status != 'Discarded!'){
                 this.sound.play('sfx_click');
-                this.game.data5 = 'Submitted!';
+                this.data5Status = 'Submitted!';
                 this.game.relation = this.game.relation + this.game.itemValue5;
                 this.game.itemValue5 = 0;
                 this.choiceCounter = this.choiceCounter + 1;
@@ -242,35 +251,40 @@ class Analysis extends Phaser.Scene {
         if(this.count == 1){
             
             this.itemText.setText(''+this.game.data1);
+            this.statusText.setText(''+this.data1Status);
         }
         else if(this.count == 2){
             
             this.itemText.setText(''+this.game.data2);
+            this.statusText.setText(''+this.data2Status);
         }
         else if(this.count == 3){
             
             this.itemText.setText(''+this.game.data3);
+            this.statusText.setText(''+this.data3Status);
         }
         else if(this.count == 4){
             
             this.itemText.setText(''+this.game.data4);
+            this.statusText.setText(''+this.data4Status);
         }
         else if(this.count == 5){
             
             this.itemText.setText(''+this.game.data5);
+            this.statusText.setText(''+this.data5Status);
         }
 
      }
 
      // generate random data for underwater trench location. returns a string
-    getTrenchData() {
+     getTrenchData() {
         // generate random integer values for latitude, longitude, and depth within specified range
         var latitude = (Math.random() * (18 - 9) + 9).toFixed(4);
         var longitude = (Math.random() * (100 - 70) + 70).toFixed(4);
         var depth = Math.round((Math.random() * (9000 - 4000) + 4000));
 
         // create a string with the random data
-        this.trenchString = `Location of a \nDeep Sea Trench\n\nCoordinates: ${latitude}°N \n${longitude}°W\nDepth: ${depth} m`;
+        this.trenchString = `Location of a\nDeep Sea Trench\n\nCoordinates: ${latitude}°N\n${longitude}°W\nDepth: ${depth} m`;
 
         // return generated string
         return this.trenchString;
@@ -311,7 +325,7 @@ class Analysis extends Phaser.Scene {
         var density = (Math.random() * (1.0273 - 1.0240) + 1.0240).toFixed(4);
 
         // create a string with the random data
-        this.waterString = `Seawater Sample\n\nSalinity: ${salinity} sg\nOxygen Concentration: ${oxygen} mg/L\nDensity: ${density} g/cm\u00B3`;
+        this.waterString = `Seawater Sample\n\nSalinity: ${salinity} sg\nOxygen: ${oxygen} mg/L\nDensity: ${density} g/cm\u00B3`;
 
         // return generated string
         return this.waterString;
