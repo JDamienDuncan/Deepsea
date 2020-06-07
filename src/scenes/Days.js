@@ -96,9 +96,9 @@ class Days extends Phaser.Scene {
         // Control FadeIn/FadeOut of scenes
         this.cameras.main.once('camerafadeincomplete', function (camera) {
 
-            camera.fadeOut(2000);
+            camera.fadeOut(1500);
         });
-        this.cameras.main.fadeIn(2000);
+        this.cameras.main.fadeIn(1500);
 
         // Frame counter used as a timer
         var timeCheck;
@@ -111,7 +111,7 @@ class Days extends Phaser.Scene {
         this.timeCheck += 1;
 
         // Use counter to allow the opening image time to fade out
-        if(this.timeCheck >= 250){
+        if(this.timeCheck >= 200){
             // Load proper scene based what day in the cycle it is 
             if(this.game.day_count == 0){
                 this.game.day_count = this.game.day_count + 1;

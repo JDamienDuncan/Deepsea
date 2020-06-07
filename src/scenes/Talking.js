@@ -360,7 +360,7 @@ class Talking extends Phaser.Scene {
                 this.current = this.dialog.conv1;
                 console.log(this.dialog);
                 console.log(this.current);
-                this.scene.start("dayScene")
+                this.scene.start("droneScene")
                 //this.go("start");
             }
             else{

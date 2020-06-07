@@ -74,22 +74,26 @@ class Analysis extends Phaser.Scene {
         
         // Displays text of current item being looked at 
         
-        this.itemText = this.add.text(170, 195, ''+this.game.data1, this.itemConfig);
+        this.itemText = this.add.text(230, 195, ''+this.game.data1, this.itemConfig);
         this.itemText.setColor('#000000');
         
         
         // Used to progress to next scene
-        this.chatAdv = this.add.text(120, 350, 'Press -Space- to Continue!', resultConfig);
+        this.chatAdv = this.add.text(120, 362, 'CONTINUE', resultConfig);
 
         // Variable keeps track of what item is being looked at
         var count;
         this.count = 1;
+        var choiceCounter;
+        this.choiceCounter = 0;
 
         // Buttons For Display
         this.leftArrow = new TextButton(this, 100, 222, '      \n       ', game.buttonConfig, () => {this.decreasePage(),this.updatePage()});
         this.rightArrow = new TextButton(this, 495, 222, '       \n       ', game.buttonConfig, () => {this.increasePage(),this.updatePage()});
         this.saveButton = new TextButton(this, 97, 85, '                        \n                        ', game.buttonConfig, () => {this.saveThis(),this.updatePage()});
         this.discardButton = new TextButton(this, 355, 85, '                        \n                        ', game.buttonConfig, () => {this.discardThis(),this.updatePage()});
+        this.continueButton = new TextButton(this, 228, 365, '                        ', game.buttonConfig, () => {this.finalize()});
+
 
        
     }
@@ -106,11 +110,15 @@ class Analysis extends Phaser.Scene {
         this.game.settings.meterY = this.meter.y;
 
         // Load into conversation scene
-        if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
+        
+        
+    }
+
+    finalize(){
+        if(this.choiceCounter >= 5){
             console.log(this.game.relation);
             this.scene.start("talkingScene");
         }
-        
     }
 
     // Discard Data of Current Page
@@ -120,7 +128,8 @@ class Analysis extends Phaser.Scene {
                 this.sound.play('sfx_click');
                 this.game.data1 = 'Discarded!';
                 this.game.itemValue1 = 0;
-                this.game.relation = this.game.relation - 1; 
+                this.game.relation = this.game.relation - 1;
+                this.choiceCounter = this.choiceCounter + 1; 
             }
         }
         else if(this.count == 2){
@@ -129,6 +138,7 @@ class Analysis extends Phaser.Scene {
                 this.game.data2 = 'Discarded!';
                 this.game.itemValue2 = 0;
                 this.game.relation = this.game.relation - 1;
+                this.choiceCounter = this.choiceCounter + 1;
             }
         }
         else if(this.count == 3){
@@ -137,6 +147,7 @@ class Analysis extends Phaser.Scene {
                 this.game.data3 = 'Discarded!';
                 this.game.itemValue3 = 0;
                 this.game.relation = this.game.relation - 1;
+                this.choiceCounter = this.choiceCounter + 1;
             }        
         }
         else if(this.count == 4){
@@ -145,6 +156,7 @@ class Analysis extends Phaser.Scene {
                 this.game.data4 = 'Discarded!';
                 this.game.itemValue4 = 0;
                 this.game.relation = this.game.relation - 1;
+                this.choiceCounter = this.choiceCounter + 1;
             }     
         }
         else if(this.count == 5){
@@ -153,6 +165,7 @@ class Analysis extends Phaser.Scene {
                 this.game.data5 = 'Discarded!';
                 this.game.itemValue5 = 0;
                 this.game.relation = this.game.relation - 1;
+                this.choiceCounter = this.choiceCounter + 1;
             }     
         }
 
@@ -161,11 +174,12 @@ class Analysis extends Phaser.Scene {
     // Save Data of Current Page
     saveThis(){
         if(this.count == 1){
-            if(this.game.data1 != 'Discarded!'){
+            if(this.game.data1 != 'Submitted!' && this.game.data1 != 'Discarded!'){
                 this.sound.play('sfx_click');
                 this.game.data1 = 'Submitted!';
                 this.game.relation = this.game.relation + this.game.itemValue1;
                 this.game.itemValue1 = 0;
+                this.choiceCounter = this.choiceCounter + 1;
             }
         }
         else if(this.count == 2){
@@ -174,30 +188,34 @@ class Analysis extends Phaser.Scene {
                 this.game.data2 = 'Submitted!';
                 this.game.relation = this.game.relation + this.game.itemValue2;
                 this.game.itemValue2 = 0;
+                this.choiceCounter = this.choiceCounter + 1;
             }
         }
-        else if(this.count == 3){
-            if(this.game.data3 != 'Discarded!'){
+        else if(this.game.data != 'Submitted!' && this.count == 3){
+            if(this.game.data3 != 'Submitted!' && this.game.data3 != 'Discarded!'){
                 this.sound.play('sfx_click');
                 this.game.data3 = 'Submitted!';
                 this.game.relation = this.game.relation + this.game.itemValue3;
                 this.game.itemValue3 = 0;
+                this.choiceCounter = this.choiceCounter + 1;
             }        
         }
         else if(this.count == 4){
-            if(this.game.data4 != 'Discarded!'){
+            if(this.game.data4 != 'Submitted!' && this.game.data4 != 'Discarded!'){
                 this.sound.play('sfx_click');
                 this.game.data4 = 'Submitted!';
                 this.game.relation = this.game.relation + this.game.itemValue4;
                 this.game.itemValue4 = 0;
+                this.choiceCounter = this.choiceCounter + 1;
             }     
         }
         else if(this.count == 5){
-            if(this.game.data5 != 'Discarded!'){
+            if(this.game.data5 != 'Submitted!' && this.game.data5 != 'Discarded!'){
                 this.sound.play('sfx_click');
                 this.game.data5 = 'Submitted!';
                 this.game.relation = this.game.relation + this.game.itemValue5;
                 this.game.itemValue5 = 0;
+                this.choiceCounter = this.choiceCounter + 1;
             }     
         }
 
@@ -252,7 +270,7 @@ class Analysis extends Phaser.Scene {
         var depth = Math.round((Math.random() * (9000 - 4000) + 4000));
 
         // create a string with the random data
-        this.trenchString = `Location of a Deep Sea Trench\n\nCoordinates: ${latitude}°N ${longitude}°W\nDepth: ${depth} m`;
+        this.trenchString = `Location of a \nDeep Sea Trench\n\nCoordinates: ${latitude}°N \n${longitude}°W\nDepth: ${depth} m`;
 
         // return generated string
         return this.trenchString;
