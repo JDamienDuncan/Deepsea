@@ -17,7 +17,7 @@ class Menu extends Phaser.Scene {
     }
 create() {
         // Menu Display
-        this.game.day_count = 0;
+        this.game.day_count = 1;
         this.game.relation = 0;
         
         // place background image

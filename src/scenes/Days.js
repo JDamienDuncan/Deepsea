@@ -118,7 +118,7 @@ class Days extends Phaser.Scene {
                 this.scene.start("day0"); 
             }
             else if(this.game.day_count == 1){
-                this.scene.start("droneScene"); 
+                this.scene.start("talkingScene"); 
             }
             else if(this.game.day_count == 2){
                 this.scene.start("droneScene");
