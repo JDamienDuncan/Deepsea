@@ -36,7 +36,7 @@ create() {
         //this.title_music.play();
 
         // set up start button
-        this.startButton = new TextButton(this, 290, 363, '      ', game.buttonConfig, () => {/*this.title_music.stop(),*/ this.scene.start("dayScene")});
+        this.startButton = new TextButton(this, 290, 350, '      \n      ', game.buttonConfig, () => {/*this.title_music.stop(),*/ this.scene.start("dayScene")});
 
         // Define keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);

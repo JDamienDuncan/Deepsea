@@ -8,13 +8,37 @@ let config = {
     height: 480,
     day_count : 1,
    
-    scene: [ Menu, Play, Drone, Days, Day0, Day1, Deduction, Dialogue]
+    scene: [ Loading, Menu, Play, Drone, Days, Day0, Day1, Analysis, Dialogue, Talking]
 }
 
 // Main game object
 let game = new Phaser.Game(config);
 
+game.globalDay = 0;
 
+const centerX = game.config.width / 2;
+const centerY = game.config.height / 2;
+const mod = 32;
+
+const button1 = 120;
+const button2 = 254;
+const button3 = 384;
+const button4 = 518;
+const buttonY = 444;
+
+let cursors = null;
+
+ game.buttonConfig = {
+    fontFamily: 'Courier',
+    fontSize: '16px',
+    strokeThickness: 1,
+    //backgroundColor: '#F3B141',
+    color: '#FFFFFF',
+    //align: 'right',
+    fixedWidth: 0
+}
+
+game.dec = new Set();
 
 // Define game variables
 game.settings = {
@@ -34,7 +58,8 @@ game.settings = {
     bot3Loc : 0,     // Keeps track of Drone 3's Location
     bot4Loc : 0,     // Keeps track of Drone 4's Location
     bot5Loc : 0,     // Keeps track of Drone 5's Location
-    relation : 0     // Main game value, affects how the story develops
+    relation : 0,     // Main game value, affects how the story develops
+    meterY: 228 
 
 }
 
@@ -42,3 +67,7 @@ game.settings = {
 // Enable keyboard vars
 let keyF, keyX, keyLEFT, keyRIGHT, keyDOWN, keyUP, keySPACE;
 
+//import loadingScene from './scenes/Loading.js';
+//game.scene.add('loadingScene', loadingScene);
+
+//game.scene.start('loadingScene');
