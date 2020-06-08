@@ -5,7 +5,7 @@ class Menu extends Phaser.Scene {
 
     preload() {
         // load audio
-        this.load.audio('sfx_select', './assets/blip_select12.wav');
+        this.load.audio('sfx_select', './assets/select.wav');
         this.load.audio('sfx_test', './assets/Test_Track.mp3');
         this.load.audio('sfx_title', './assets/Title_Track.mp3');
 
@@ -16,6 +16,8 @@ class Menu extends Phaser.Scene {
         this.load.image('large_bubbles', './assets/large_bubbles.png');
     }
 create() {
+       
+
         // Menu Display
         this.game.day_count = 0;
         this.game.relation = 0;
@@ -36,7 +38,7 @@ create() {
         //this.title_music.play();
 
         // set up start button
-        this.startButton = new TextButton(this, 290, 350, '      \n      ', game.buttonConfig, () => {/*this.title_music.stop(),*/ this.scene.start("talkingScene")});
+        this.startButton = new TextButton(this, 290, 350, '      \n      ', game.buttonConfig, () => this.nextScene());
 
         // Define keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
@@ -53,5 +55,18 @@ create() {
         this.smallBubbles.tilePositionY += 2;
         this.medBubbles.tilePositionY += 1.5;
         this.largeBubbles.tilePositionY += 1;
+    }
+
+    nextScene() {
+        this.sound.play('sfx_select', {volume: 0.1});
+        
+        this.cameras.main.fadeOut(2000);
+                    
+        this.time.delayedCall(2000,
+            () => {
+                this.scene.start("talkingScene");
+            }, 
+        [], 
+        this);
     }
 }
