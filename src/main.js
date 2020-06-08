@@ -16,6 +16,8 @@ let game = new Phaser.Game(config);
 
 game.globalDay = 0;
 
+game.workStatus = 0;
+
 const centerX = game.config.width / 2;
 const centerY = game.config.height / 2;
 const mod = 32;
@@ -42,6 +44,7 @@ game.dec = new Set();
 
 // Define game variables
 game.settings = {
+    meterY: 228,
     day_count : 0, // Keeps track of the current day  
     data1 : 0,     // Data retrieved from Drone 1
     data2 : 0,     // Data retrieved from Drone 2
@@ -58,8 +61,7 @@ game.settings = {
     bot3Loc : 0,     // Keeps track of Drone 3's Location
     bot4Loc : 0,     // Keeps track of Drone 4's Location
     bot5Loc : 0,     // Keeps track of Drone 5's Location
-    relation : 0,     // Main game value, affects how the story develops
-    meterY: 228 
+    relation : 0     // Main game value, affects how the story develops
 
 }
 
@@ -71,3 +73,4 @@ let keyF, keyX, keyLEFT, keyRIGHT, keyDOWN, keyUP, keySPACE;
 //game.scene.add('loadingScene', loadingScene);
 
 //game.scene.start('loadingScene');
+

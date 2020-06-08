@@ -67,7 +67,7 @@ class Day0 extends Phaser.Scene {
             this.dayfield = this.add.tileSprite(0, 0, 640, 480, 'roy').setOrigin(0, 0);
         }
 
-        this.meter = new Arrow(this, 15, game.settings.meterY, 'arrow', 0, 30).setOrigin(0,0);
+        this.meter = new Arrow(this, 15, 228, 'arrow', 0, 30).setOrigin(0,0);
 
         // Controls Fadeout/Fadein of the Images
         this.cameras.main.once('camerafadeincomplete', function (camera) {
@@ -96,7 +96,6 @@ class Day0 extends Phaser.Scene {
         else if(this.meter.y > 338){
             this.meter.y = 338;
         }
-        this.game.settings.meterY = this.meter.y;
         
         // Restart Game(Used For Testing)
         if (Phaser.Input.Keyboard.JustDown(keyF)) {

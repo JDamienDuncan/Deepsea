@@ -104,7 +104,23 @@ class Analysis extends Phaser.Scene {
         this.data5Status = '';
 
 
+        this.doThingsRight();
+
+
        
+    }
+
+    doThingsRight(){
+        console.log("tryuing to do things right");
+        console.log("global day is " + game.globalDay);
+        if(game.globalDay == 1){
+            console.log("aaaaaaaaaaaaits 1");
+            this.scene.start("talkingScene");
+        }
+        if(game.globalDay == 2){
+            console.log("aaaaaaaaaaaits 2")
+        }
+
     }
         
 

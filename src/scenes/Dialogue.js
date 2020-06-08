@@ -30,7 +30,7 @@ class Dialogue extends Phaser.Scene {
         this.dayfield = this.add.tileSprite(0, 0, 640, 480, 'UI').setOrigin(0, 0);
         this.chatAdv = this.add.text(120, 350, 'Conversation for Day: '+this.game.day_count, resultConfig);
         this.chatAdv = this.add.text(120, 320, 'Press -Space- to Continue!', resultConfig);
-        this.meter = new Arrow(this, 15, game.settings.meterY, 'arrow', 0, 30).setOrigin(0,0);
+        this.meter = new Arrow(this, 15, 228, 'arrow', 0, 30).setOrigin(0,0);
 
     }
 
@@ -42,7 +42,6 @@ class Dialogue extends Phaser.Scene {
         else if(this.meter.y > 338){
             this.meter.y = 338;
         }
-        this.game.settings.meterY = this.meter.y;
 
         if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
             //this.test_music.stop();
