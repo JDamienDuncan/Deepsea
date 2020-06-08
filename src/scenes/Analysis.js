@@ -466,7 +466,139 @@ else if(this.count == 4){
 
     */
     getData(){
+        this.botLocations = [this.game.bot1Loc,this.game.bot2Loc,this.game.bot3Loc,this.game.bot4Loc,this.game.bot5Loc];
+        this.dataValues = [this.game.itemValue1,this.game.itemValue2,this.game.itemValue3,this.game.itemValue4,this.game.itemValue5];
+        this.dataItems = [this.game.data1,this.game.data2,this.game.data3,this.game.data4,this.game.data5];
+        
+        for( var i = 0; i < this.botLocations.length; i++){
+            // GAME PART ONE: DAYS 1-4
+            if(this.game.day_count < 5 ){
+                //Location 1, 2, 3 Data
+                if(this.botLocations[i]== 1 || this.botLocations[i] == 2 || this.botLocations[i] == 3){
+                    this.botLocations[i] = Math.floor(Math.random() * 100) + 1;
+                    if(this.botLocations[i] <= 65){
+                        this.dataItems[i] = this.usefulData[Math.floor(Math.random() * this.usefulData.length)];
+                        this.dataValues[i] = 2;
+                    }
+                    else if(this.botLocations[i] > 65 && this.botLocations[i] <= 90){
+                        this.dataItems[i] = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
+                        this.dataValues[i] = -1;
+                    }
+                    else if(this.botLocations[i] > 90){
+                        this.dataItems[i] = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
+                        this.dataValues[i] = -2;
+                    }
+                }
+                //Location 4 Data
+                else if(this.botLocations[i] == 4){
+                    this.botLocations[i] = Math.floor(Math.random() * 100) + 1;
+                    if(this.botLocations[i] <= 10){
+                        this.dataItems[i] = this.usefulData[Math.floor(Math.random() *this.usefulData.length)];
+                        this.dataValues[i] = 2;
+                    }
+                    else if(this.botLocations[i] > 10 && this.botLocations[i] <= 90){
+                        this.dataItems[i] = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
+                        this.dataValues[i] = -2;
+                    }
+                    else if(this.botLocations[i] > 90){
+                        this.dataItems[i] = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
+                        this.dataValues[i] = -2;
+                    }
+                }
+                //Location 5 Data
+                else if(this.botLocations[i] == 5){
+                    this.botLocations[i] = Math.floor(Math.random() * 100) + 1;
+                    if(this.botLocations[i] <= 85){
+                        this.dataItems[i] = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
+                        this.dataValues[i] = -2;
+                    }
+                    else if(this.botLocations[i] > 85){
+                        this.dataItems[i] = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
+                        this.dataValues[i] = -2;
+                    }
+                }
+            
+            } 
+            // GAME PART TWO: DAYS 5-8
+            else if(this.game.day_count > 4 && this.game.day_count < 9  ){
+                for( var i = 0; i < this.botLocations.length; i++){
+                    if(this.game.day_count < 5 ){
+                        //Location 1, 2, 3 Data
+                        if(this.botLocations[i]== 1 || this.botLocations[i] == 2 || this.botLocations[i] == 3){
+                            this.botLocations[i] = Math.floor(Math.random() * 100) + 1;
+                            if(this.botLocations[i] <= 75){
+                                this.dataItems[i] = this.usefulData[Math.floor(Math.random() * this.usefulData.length)];
+                                this.dataValues[i] = 2;
+                            }
+                            else if(this.botLocations[i] > 75 && this.botLocations[i] <= 95){
+                                this.dataItems[i] = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
+                                this.dataValues[i] = -1;
+                            }
+                            else if(this.botLocations[i] > 95){
+                                this.dataItems[i] = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
+                                this.dataValues[i] = -2;
+                            }
+                        }
+                        //Location 4 Data
+                        else if(this.botLocations[i] == 4){
+                            this.botLocations[i] = Math.floor(Math.random() * 100) + 1;
+                            if(this.botLocations[i] <= 10){
+                                this.dataItems[i] = this.usefulData[Math.floor(Math.random() *this.usefulData.length)];
+                                this.dataValues[i] = 2;
+                            }
+                            else if(this.botLocations[i] > 10 && this.botLocations[i] <= 95){
+                                this.dataItems[i] = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
+                                this.dataValues[i] = -2;
+                            }
+                            else if(this.botLocations[i] > 95){
+                                this.dataItems[i] = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
+                                this.dataValues[i] = -2;
+                            }
+                        }
+                        //Location 5 Data
+                        else if(this.botLocations[i] == 5){
+                            this.botLocations[i] = Math.floor(Math.random() * 100) + 1;
+                            if(this.botLocations[i] <= 90){
+                                this.dataItems[i] = this.uselessData[Math.floor(Math.random() *this.uselessData.length)];
+                                this.dataValues[i] = -2;
+                            }
+                            else if(this.botLocations[i] > 90){
+                                this.dataItems[i] = this.strangeData[Math.floor(Math.random() *this.strangeData.length)];
+                                this.dataValues[i] = -2;
+                            }
+                        }
+                
+            }
+            // GAME PART THREE: DAYS 9-12
+            else if(this.game.day_count > 8 && this.game.day_count < 13  ){
+                
+            }
+            // GAME PART FOUR: DAYS 13-16
+            else if(this.game.day_count > 12 && this.game.day_count <= 16  ){
+                
+            }
+            
+            
 
+
+        }
+
+        this.game.data1 = this.dataItems[0];
+        this.game.data2 = this.dataItems[1];
+        this.game.data3 = this.dataItems[2];
+        this.game.data4 = this.dataItems[3];
+        this.game.data5 = this.dataItems[4];
+        this.game.itemValue1 = this.dataValues[0];
+        this.game.itemValue2 = this.dataValues[1];
+        this.game.itemValue3 = this.dataValues[2];
+        this.game.itemValue4 = this.dataValues[3];
+        this.game.itemValue5 = this.dataValues[4];
+        this.game.bot1Loc = this.botLocations[0];
+        this.game.bot2Loc = this.botLocations[1];
+        this.game.bot3Loc = this.botLocations[2];
+        this.game.bot4Loc = this.botLocations[3];
+        this.game.bot5Loc = this.botLocations[4];
+        /*
         // Game Part 1
         if(this.game.day_count < 5 ){
             // Item for Bot 1
@@ -1323,9 +1455,6 @@ else if(this.count == 4){
                 }
             }
         }
-
-
-     }
-
-     
+        */
+    }
 }
