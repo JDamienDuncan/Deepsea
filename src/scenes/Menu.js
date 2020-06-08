@@ -5,7 +5,7 @@ class Menu extends Phaser.Scene {
 
     preload() {
         // load audio
-        this.load.audio('sfx_select', './assets/select.wav');
+        this.load.audio('sfx_select1', './assets/select.wav');
         this.load.audio('sfx_test', './assets/Test_Track.mp3');
         this.load.audio('sfx_title', './assets/Title_Track.mp3');
 
@@ -58,7 +58,7 @@ create() {
     }
 
     nextScene() {
-        this.sound.play('sfx_select', {volume: 0.1});
+        this.sound.play('sfx_select1', {volume: 1});
         
         this.cameras.main.fadeOut(2000);
                     
