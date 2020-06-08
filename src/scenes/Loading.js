@@ -49,6 +49,8 @@ class Loading extends Phaser.Scene {
         this.load.audio('sfx_page', 'sfx/PageFlip.mp3');
         this.load.audio('sfx_click', 'sfx/Click2.mp3');
         this.load.audio('tran', 'sfx/Transition.mp3');
+        this.load.audio('aquaria', 'sfx/aquaria.wav');
+        this.load.audio('quinns_song', 'sfx/quinnssong.mp3');
 
 
         //whatever the fuck these are supposed to be

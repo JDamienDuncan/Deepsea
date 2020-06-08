@@ -55,6 +55,17 @@ class Talking extends Phaser.Scene {
 
     create() {
 
+        if (game.globalDay <= 5 && !this.music1Playing) {
+            this.music1Playing = true;
+            this.talkingMusic1 = game.sound.add('aquaria');
+            this.talkingMusic1.play(game.musicConfig);
+        } else if (game.globalDay > 5 && !this.music2Playing) {
+            this.music2Playing = true;
+            this.talkingMusic1.stop();
+            this.talkingMusic2 = game.sound.add('quinns_song');
+            this.talkingMusic2.play(game.musicConfig);
+        }
+
         
         // parse dialog from JSON file
         //this.dialog = this.cache.json.get('dialog');

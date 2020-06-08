@@ -11,8 +11,15 @@ let config = {
     scene: [ Loading, Menu, Play, Drone, Days, Analysis, Talking]
 }
 
+
+
 // Main game object
 let game = new Phaser.Game(config);
+
+game.musicConfig = {
+    volume: 0.1,
+    loop: true
+}
 
 game.globalDay = 0;
 
