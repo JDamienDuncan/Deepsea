@@ -66,10 +66,23 @@ class Drone extends Phaser.Scene {
             },
             fixedWidth: 70
         }
+        let dateConfig = {
+            fontFamily: 'Courier',
+            fontSize: '12px',
+            backgroundColor : '#FFFFFF',
+            color: '#000000',
+            align: 'center',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 100
+        }
         // Score text configs
         let scoreConfig = {
             fontFamily: 'Courier',
             fontSize: '26px',
+            
             
             color: '#000000',
             align: 'center',
@@ -97,6 +110,8 @@ class Drone extends Phaser.Scene {
         // Add text to screen
         this.droneTitle = this.add.text(346, 432, 'SEND', textConfig);
         this.droneTitle = this.add.text(220, 432, 'RESET', textConfig);
+        // date display
+        this.date = this.add.text(110, 60, '6/' + (5 + game.globalDay) + '/20XX', game.buttonConfig).setOrigin(0.5);
         //this.droneTitle = this.add.text(300, 70, 'Press -X- to send the Drones!', textConfig);
         this.meter = new Arrow(this, 15, game.settings.meterY, 'arrow', 0, 30).setOrigin(0,0);
         

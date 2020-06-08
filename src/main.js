@@ -8,7 +8,7 @@ let config = {
     height: 480,
     day_count : 1,
    
-    scene: [ Loading, Menu, Play, Drone, Days, Day0, Day1, Analysis, Dialogue, Talking]
+    scene: [ Loading, Menu, Play, Drone, Days, Analysis, Talking]
 }
 
 // Main game object

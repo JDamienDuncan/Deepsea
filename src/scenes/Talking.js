@@ -54,6 +54,8 @@ class Talking extends Phaser.Scene {
     }
 
     create() {
+
+        
         // parse dialog from JSON file
         //this.dialog = this.cache.json.get('dialog');
         //let aa = 'dialog'
@@ -144,6 +146,9 @@ class Talking extends Phaser.Scene {
             duration: this.tweenDuration,
             ease: 'Linear'
         });
+
+        // date display
+        this.date = this.add.text(110, 60, '6/' + (5 + game.globalDay) + '/20XX', game.buttonConfig).setOrigin(0.5);
 
         // input
         cursors = this.input.keyboard.createCursorKeys();

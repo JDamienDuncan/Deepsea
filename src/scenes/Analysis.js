@@ -54,7 +54,7 @@ class Analysis extends Phaser.Scene {
             duration: this.tweenDuration,
             ease: 'Linear'
         });
-        
+
         // Load Background/meter
         this.dayfield = this.add.tileSprite(0, 0, 640, 480, 'UI').setOrigin(0, 0);
         this.deductfield = this.add.tileSprite(0, 0, 640, 480, 'BookUI').setOrigin(0, 0);
@@ -110,6 +110,9 @@ class Analysis extends Phaser.Scene {
         this.data3Status = '';
         this.data4Status = '';
         this.data5Status = '';
+
+        // date display
+        this.date = this.add.text(110, 60, '6/' + (5 + game.globalDay) + '/20XX', game.buttonConfig).setOrigin(0.5);
 
 
         this.doThingsRight();
