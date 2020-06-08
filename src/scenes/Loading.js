@@ -40,6 +40,7 @@ class Loading extends Phaser.Scene {
         this.load.image('dronefield', 'img/Drone_Field.png');
         this.load.image('bot_sprite', 'img/Bot.png');
         this.load.image('marker_sprite', 'img/Marker.png');
+        this.load.image('end_screen', 'img/end_screen.png');
 
         //sfx
         this.load.audio('sfx_drop', 'sfx/Click1.mp3');
