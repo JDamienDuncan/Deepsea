@@ -136,6 +136,15 @@ class Talking extends Phaser.Scene {
         this.neptune = this.add.sprite(this.OFFSCREEN_X, this.DBOX_Y+8, 'neptune').setOrigin(0, 1);
         this.jove = this.add.sprite(this.OFFSCREEN_X, this.DBOX_Y+8, 'jove').setOrigin(0, 1);
 
+        // fade in
+        this.transition = this.add.rectangle(0, 0, 640, 480, 0x000000).setOrigin(0, 0);
+        this.tweens.add({
+            targets: this.transition,
+            alpha: 0,
+            duration: this.tweenDuration,
+            ease: 'Linear'
+        });
+
         // input
         cursors = this.input.keyboard.createCursorKeys();
         this.add.tileSprite(0, 0, 640, 480, 'UI').setOrigin(0, 0);
@@ -150,6 +159,7 @@ class Talking extends Phaser.Scene {
         // start dialog
         this.checkType2("start");
         //this.typeText();
+        
     }
 
     update() {
@@ -397,7 +407,20 @@ class Talking extends Phaser.Scene {
                 this.current = this.dialog.conv1;
                 console.log(this.dialog);
                 console.log(this.current);
-                this.scene.start("droneScene")
+                // fade out
+                this.tweens.add({
+                    targets: this.transition,
+                    alpha: 1,
+                    duration: this.tweenDuration,
+                    ease: 'Linear'
+                });
+                this.time.delayedCall(this.tweenDuration,
+                    () => {
+                        this.scene.start("droneScene");
+                    }, 
+                [], 
+                this);
+                //this.scene.start("droneScene")
                 //this.go("start");
             }
             else{

@@ -46,7 +46,15 @@ class Analysis extends Phaser.Scene {
         }
 
         
-
+        // fade in
+        this.transition = this.add.rectangle(0, 0, 640, 480, 0x000000).setOrigin(0, 0);
+        this.tweens.add({
+            targets: this.transition,
+            alpha: 0,
+            duration: this.tweenDuration,
+            ease: 'Linear'
+        });
+        
         // Load Background/meter
         this.dayfield = this.add.tileSprite(0, 0, 640, 480, 'UI').setOrigin(0, 0);
         this.deductfield = this.add.tileSprite(0, 0, 640, 480, 'BookUI').setOrigin(0, 0);
@@ -142,7 +150,20 @@ class Analysis extends Phaser.Scene {
     finalize(){
         if(this.choiceCounter >= 5){
             console.log(this.game.relation);
-            this.scene.start("talkingScene");
+            // fade out
+            this.tweens.add({
+                targets: this.transition,
+                alpha: 1,
+                duration: this.tweenDuration,
+                ease: 'Linear'
+            });
+            this.time.delayedCall(this.tweenDuration,
+                () => {
+                    this.scene.start("talkingScene");
+                }, 
+            [], 
+            this);
+            //this.scene.start("talkingScene");
         }
     }
 
