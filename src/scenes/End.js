@@ -21,8 +21,8 @@ class End extends Phaser.Scene {
         let textSpacer = 32;
 
         // crediting us!
-        this.add.text(328, 150, 'John D. Duncan', endConfig).setOrigin(0.5);
-        this.add.text(328, 150 + textSpacer, 'Carson Hull', endConfig).setOrigin(0.5);
+        this.add.text(328, 150, 'John D. Duncan: Lead Code Designer', endConfig).setOrigin(0.5);
+        this.add.text(328, 150 + textSpacer, 'Carson Hull: Narrative Design, Code Designer', endConfig).setOrigin(0.5);
         this.add.text(328, 150 + textSpacer*2, 'Mikayla Roberts: Visual Art, Sound Design, and Code Cleanup', endConfig).setOrigin(0.5);
 
         endConfig.fontSize = '10px';

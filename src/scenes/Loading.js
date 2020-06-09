@@ -15,6 +15,9 @@ class Loading extends Phaser.Scene {
         this.load.json('dialog', 'json/dialog.json');
         this.load.json('day1', 'json/day1.json');
         this.load.json('day2', 'json/day2.json');
+        this.load.json('day3', 'json/day3.json');
+        this.load.json('day4', 'json/day4.json');
+        this.load.json('day5', 'json/day5.json');
         this.load.json('day6', 'json/day6.json');
 
         //character sprites
@@ -40,9 +43,13 @@ class Loading extends Phaser.Scene {
         this.load.image('dronefield', 'img/Drone_Field.png');
         this.load.image('bot_sprite', 'img/Bot.png');
         this.load.image('marker_sprite', 'img/Marker.png');
-        this.load.image('end_screen', 'img/end_screen.png');
 
         //sfx
+        this.load.audio('sfx_select', 'sfx/select.wav');
+        this.load.audio('aquaria', 'sfx/aquaria.wav');
+        this.load.audio('quinns_song', 'sfx/QuinnsSong.mp3');
+        this.load.audio('sfx_radio', 'sfx/radio.wav');
+
         this.load.audio('sfx_drop', 'sfx/Click1.mp3');
         this.load.audio('sfx_select', 'sfx/blip_select12.wav');
         this.load.audio('sfx_test', 'sfx/Test_Track.mp3');
@@ -50,8 +57,6 @@ class Loading extends Phaser.Scene {
         this.load.audio('sfx_page', 'sfx/PageFlip.mp3');
         this.load.audio('sfx_click', 'sfx/Click2.mp3');
         this.load.audio('tran', 'sfx/Transition.mp3');
-        this.load.audio('aquaria', 'sfx/aquaria.wav');
-        this.load.audio('quinns_song', 'sfx/quinnssong.mp3');
 
 
         //whatever the fuck these are supposed to be

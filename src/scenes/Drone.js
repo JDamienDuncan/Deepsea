@@ -18,16 +18,6 @@ class Drone extends Phaser.Scene {
     }
 
     create() {
-        // fade in
-        this.transition = this.add.rectangle(0, 0, 640, 480, 0x000000).setOrigin(0, 0);
-        this.tweens.add({
-            targets: this.transition,
-            alpha: 0,
-            duration: this.tweenDuration,
-            ease: 'Linear'
-        });
-        console.log('The heck?');
-
         // Define title track
         var title_music;
         this.title_music = game.sound.add('sfx_title');
@@ -66,23 +56,10 @@ class Drone extends Phaser.Scene {
             },
             fixedWidth: 70
         }
-        let dateConfig = {
-            fontFamily: 'Courier',
-            fontSize: '12px',
-            backgroundColor : '#FFFFFF',
-            color: '#000000',
-            align: 'center',
-            padding: {
-                top: 5,
-                bottom: 5,
-            },
-            fixedWidth: 100
-        }
         // Score text configs
         let scoreConfig = {
             fontFamily: 'Courier',
             fontSize: '26px',
-            
             
             color: '#000000',
             align: 'center',
@@ -105,13 +82,15 @@ class Drone extends Phaser.Scene {
         this.dronefield = this.add.tileSprite(0, 0, 640, 480, 'dronefield').setOrigin(0, 0);
         this.background = this.add.tileSprite(0, 0, 640, 480, 'UI').setOrigin(0, 0);
 
-        
+        // Controls Fadeout/Fadein of the Images
+        this.cameras.main.once('camerafadeincomplete', function (camera) {
+
+        });
+        this.cameras.main.fadeIn(2500);
         
         // Add text to screen
         this.droneTitle = this.add.text(346, 432, 'SEND', textConfig);
         this.droneTitle = this.add.text(220, 432, 'RESET', textConfig);
-        // date display
-        this.date = this.add.text(110, 60, '6/' + (5 + game.globalDay) + '/20XX', game.buttonConfig).setOrigin(0.5);
         //this.droneTitle = this.add.text(300, 70, 'Press -X- to send the Drones!', textConfig);
         this.meter = new Arrow(this, 15, game.settings.meterY, 'arrow', 0, 30).setOrigin(0,0);
         
@@ -130,12 +109,11 @@ class Drone extends Phaser.Scene {
         this.bot04 = new Bot(this, 370, 340, 'bot_sprite', 0, 30).setOrigin(0,0);
         this.bot05 = new Bot(this, 450, 340, 'bot_sprite', 0, 30).setOrigin(0,0);
 
-        
-
         // Buttons for UI
         this.sendButton = new TextButton(this, 332, 430, '          \n          ', game.buttonConfig, () => {this.sendDrones()});
         this.resetButton = new TextButton(this, 203, 430, '          \n          ', game.buttonConfig, () => {this.resetDrones()});
-     }
+        this.date = this.add.text(110, 60, '6/' + (5 + game.globalDay) + '/20XX', game.buttonConfig).setOrigin(0.5);
+    }
 
 
     update() {
@@ -406,22 +384,7 @@ class Drone extends Phaser.Scene {
     sendDrones(){
         if((this.score1+this.score2+this.score3+this.score4+this.score5) == 5){
             this.sound.play('sfx_drop');
-
-            // fade out
-            this.tweens.add({
-                targets: this.transition,
-                alpha: 1,
-                duration: this.tweenDuration,
-                ease: 'Linear'
-            });
-            this.time.delayedCall(this.tweenDuration,
-                () => {
-                    this.scene.start("analysisScene");
-                }, 
-            [], 
-            this);
-            
-           // this.scene.start("analysisScene"); // Load into the deduction scene
+            this.scene.start("analysisScene"); // Load into the deduction scene
         }
     }
      

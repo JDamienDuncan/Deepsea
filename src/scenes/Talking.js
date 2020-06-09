@@ -54,7 +54,21 @@ class Talking extends Phaser.Scene {
     }
 
     create() {
+        // parse dialog from JSON file
+        //this.dialog = this.cache.json.get('dialog');
+        //let aa = 'dialog'
+        this.day = [
+            this.cache.json.get('dialog'),
+            this.cache.json.get('day1'),
+            this.cache.json.get('day2'),
+            this.cache.json.get('day3'),
+            this.cache.json.get('day4'),
+            this.cache.json.get('day5'),
+            this.cache.json.get('day6')
 
+        ]
+
+        // play music
         if (game.globalDay <= 5 && !this.music1Playing) {
             this.music1Playing = true;
             this.talkingMusic1 = game.sound.add('aquaria');
@@ -67,16 +81,6 @@ class Talking extends Phaser.Scene {
         }
 
         
-        // parse dialog from JSON file
-        //this.dialog = this.cache.json.get('dialog');
-        //let aa = 'dialog'
-        this.day = [
-            this.cache.json.get('dialog'),
-            this.cache.json.get('day1'),
-            this.cache.json.get('day2'),
-            this.cache.json.get('day6')
-
-        ]
         this.daynum = game.globalDay;
         //let day1 = this.cache.json.get('dialog');
         //this.dialog = this.cache.json.get('dialog');
@@ -149,18 +153,6 @@ class Talking extends Phaser.Scene {
         this.neptune = this.add.sprite(this.OFFSCREEN_X, this.DBOX_Y+8, 'neptune').setOrigin(0, 1);
         this.jove = this.add.sprite(this.OFFSCREEN_X, this.DBOX_Y+8, 'jove').setOrigin(0, 1);
 
-        // fade in
-        this.transition = this.add.rectangle(0, 0, 640, 480, 0x000000).setOrigin(0, 0);
-        this.tweens.add({
-            targets: this.transition,
-            alpha: 0,
-            duration: this.tweenDuration,
-            ease: 'Linear'
-        });
-
-        // date display
-        this.date = this.add.text(110, 60, '6/' + (5 + game.globalDay) + '/20XX', game.buttonConfig).setOrigin(0.5);
-
         // input
         cursors = this.input.keyboard.createCursorKeys();
         this.add.tileSprite(0, 0, 640, 480, 'UI').setOrigin(0, 0);
@@ -175,7 +167,11 @@ class Talking extends Phaser.Scene {
         // start dialog
         this.checkType2("start");
         //this.typeText();
-        
+        this.sound.play('sfx_radio', {volume: 0.05});
+
+        this.date = this.add.text(110, 60, '6/' + (5 + game.globalDay) + '/20XX', game.buttonConfig).setOrigin(0.5);
+
+        //INSERT FADE IN HERE
     }
 
     update() {
@@ -325,6 +321,9 @@ class Talking extends Phaser.Scene {
         if(hold.type == "endOfDay"){
             this.endDay();
         }
+        if(hold.type == "endGame"){
+            this.scene.start("endScene")
+        }
 
     }
 
@@ -360,6 +359,7 @@ class Talking extends Phaser.Scene {
             
             this.fadeOut();
         }
+        this.sound.play('sfx_radio', {volume: 0.05});
     }
 
     endScene(){
@@ -423,20 +423,8 @@ class Talking extends Phaser.Scene {
                 this.current = this.dialog.conv1;
                 console.log(this.dialog);
                 console.log(this.current);
-                // fade out
-                this.tweens.add({
-                    targets: this.transition,
-                    alpha: 1,
-                    duration: this.tweenDuration,
-                    ease: 'Linear'
-                });
-                this.time.delayedCall(this.tweenDuration,
-                    () => {
-                        this.scene.start("droneScene");
-                    }, 
-                [], 
-                this);
-                //this.scene.start("droneScene")
+                //INSERT FADE OUT HERE
+                this.scene.start("droneScene")
                 //this.go("start");
             }
             else{

@@ -3,9 +3,8 @@ conv1:
   conflicts: null
   next: null
   start:
-    speaker: geneva
-    display: >-
-      Dr. Ingram, do you copy?
+    speaker: toby
+    display: Nyah! What's up, Doc?
     next: sec2
     type: conv
 
@@ -13,285 +12,402 @@ conv1:
     type: choice
     choices:
       A:
-        text: 'Loud and clear, Geneva. '
-        target: loud
+        text: Bugs? Right?
+        target: bugsBunny
       B:
-        text: (fake static))
-        target: fakeStatic
+        text: Hi, Toby.
+        target: hiToby
 
-  fakeStatic:
+  bugsBunny:
     speaker: ingram
-    display: ksshhh - What? I - sshhhhhkkshshhh - can't hear - sshhhhhh ksh
-    next: fakeStatic.re
+    display: Bugs? Right? Bugs Bunny?
+    next: bugsRe
     type: conv
-  fakeStatic.re:
-    speaker: geneva
-    display: >-
-      Very funny, Dr. Ingram. If you're done, I'd like to get started. 
+  bugsRe:
+    speaker: toby
+    display: ...You have to ask? Ingram. I'm disappointed in you.
+    next: knockRe2
+    type: conv
+  knockRe2:
+    speaker: ingram
+    display: I was a Peanuts kid, what can I say?
+    next: knockRe3
+    type: conv
+  knockRe3:
+    speaker: toby
+    display: There's like twenty years between those. 
+    next: knockRe4
+    type: conv
+  knockRe4:
+    speaker: ingram
+    display: Your point? Anyway how are things?
     next: sec3
     type: conv
 
-  loud:
+  hiToby:
     speaker: ingram
-    display: I hear you loud and clear, Geneva. 
-    next: loud.1
-    type: conv
-
-  loud.1:
-    speaker: geneva
-    display: >-
-      Excellent. Then let's get started.
+    display: Hi, Toby.
     next: sec3
     type: conv
 
   sec3:
-    speaker: geneva
-    display: >-
-      Tobias informed me of the unfortunate situation with the drones. I've already emailed the manufacturer. Unfortunately, the likelihood that the replacement chargers would get there before your extraction is... low. 
+    speaker: toby
+    display: Nothing new up here... I found a 3D model for Al, so I'm gonna be printing that out for my neice once my filament comes in. How ya doin', Doc?
     next: sec4
     type: conv
-
-
   sec4:
-    speaker: ingram
-    display: We'll just have to make the best of it. I sent some of them out yesterday while the others were charging. I had to take my best guess as for what Toby wants out of the data...
-    next: sec5
-    type: conv
-
-
-  sec5:
-    speaker: geneva
-    display: I'm - uh. I actually don't know what information he wants. Um - the good news is that anything is probably fine, and someone at the facility can probably use it somehow. Except for... trash... and things like that. 
-    next: sec6
-    type: conv
-
-  sec6:
-    speaker: ingram
-    display: So no cool fish pictures? 
-    next: sec7
-    type: conv
-
-  sec7:
-    speaker: geneva
-    display: The drones have cameras?
-    next: sec8
-    type: conv
-
-  sec8:
-    speaker: ingram
-    display: You didn't know that?
-    next: sec9
-    type: conv
-
-  sec9:
-    speaker: geneva
-    display: I manage the finances. I don't need to know the specifics. And to answer your question, I think we can probably do without the "cool" fish pictures.
-    next: sec10
-    type: conv
-
-  sec10:
-    speaker: ingram
-    display: Your loss. 
-    next: sec11
-    type: conv
-
-  sec11:
-    speaker: geneva
-    display: For the most part, I'm trusting your judgement. We can only afford to keep you down there so long as you're productive. We're already pushing it, having the station operating twice as long as intended, what with Tobias's... Conflicts.
-    next: sec12
-    type: conv
-  
-  sec12: 
-    speaker: ingram
-    display: Right. Understood.
-    next: sec13
-    type: conv
-  
-  sec13:
-    speaker: geneva
-    display: Tobias said that he installed some kind of widget on the main computer the last time he was down there. Something about keeping track of his sample status?
-    next: sec14
-    type: conv
-
-  sec14: 
-    speaker: ingram
-    display: He did? Is that this little... meter-looking thing?
-    next: sec15
-    type: conv
-  
-  sec15:
-    speaker: geneva
-    display: Um... Again, that's something to ask Tobias about. 
-    next: sec16
-    type: conv
-  
-  sec16:
-    speaker: geneva
-    display: Technical things aside, just keep your head on straight. Use your best judgement, and try not get distracted. I know it's going to be difficult to do someone else's work, but we wouldn't be asking you to do it if we didn't think you could.
-    next: sec17
-    type: conv
-
-  sec17:
-    speaker: geneva
-    display: As always, the Argonaut is there should you need to leave the staion for any reason, the emergency contact button is there for emergencies, and so on. Did you have anything you wanted to discuss?
-    next: sec18
-
-  sec18:
     type: choice
     choices: 
       A:
-        text: I do.
-        target: yesDiscuss
+        text: Kinda creeped out.
+        target: creeped
       B:
-        text: I don't.
-        target: noDiscuss
-
-  yesDiscuss:
+        text: A-OK. 
+        target: aok
+  creeped:
     speaker: ingram
-    display: Actually I did have something I wanted to talk about.
-    next: discussChoice
+    display: I'm kind of creeped out. Weird things keep happening with the radio, and I just.. It's creepy. It's been getting clearer every night. Eugh. (shiver)
+    next: end
     type: conv
-
-  noDiscuss:
+  aok:
     speaker: ingram
-    display: No, nothing important, anyway. 
-    next: sec19
+    display: I'm doing A-OK. Fine and dandy. Nothing to worry about here.
+    next: aok2
     type: conv
-  
-  discussChoice:
-    type: choice
-    choices:
-      A:
-        text: Poor performance?
-        target: poorPerform
-      B:
-        text: The Argonaut?
-        target: argonaut
-
-  discussChoiceA:
-    type: choice
-    choices:
-      A:
-        text: Poor performance?
-        target: poorPerform
-      B:
-        text: Nothing else to discuss.
-        target: noDiscuss
-
-  discussChoiceB:
-    type: choice
-    choices:
-      A:
-        text: The Argonaut?
-        target: argonaut
-      B:
-        text: Nothing else to discuss.
-        target: noDiscuss
-
-  poorPerform:
+  aok2:
+    speaker: toby
+    display: Uh... are you sure? 
+    next: aok3
+    type: conv
+  aok3:
     speaker: ingram
-    display: What happens if I don't deliver as much usable data as we wanted?
-    next: noData
+    display: Yep. Nothing to worry about. Everything is fine. 
+    next: aok4
     type: conv
-  
-  noData:
-    speaker: geneva
-    display: Like I said already, we can only afford to keep you down there as long as you're actually productive. We don't have the money to keep the station running for that much longer, so if you're not getting anything done... Lesson learned, and we'll bring you back up early. 
-    next: noDataRe
+  aok4:
+    speaker: toby
+    display: Um... If - uh, if you insist. 
+    next: end
     type: conv
-
-  noDataRe:
-    speaker: ingram
-    display: I see. 
-    next: noDataReRe
-    type: conv
-  
-  noDataReRe:
-    speaker: geneva
-    display: To reiterate, your position wouldn't be in any sort of jeopardy. We know that we're asking you to do work outside of your area of expertise. But... Try your best for us, okay?
-    next: noDataChoice
-    type: conv
-
-  noDataChoice:
-    type: choice
-    choices:
-      A:
-        text: No promises
-        target: noPromise
-      B:
-        text: I'll do my best
-        target: myBest
-  
-  noPromise:
-    speaker: ingram
-    display: I make no promises. All joking aside I am wary about all of this. I think being down here for so long is starting to get to me.
-    next: genWorry
-    type: conv
-
-  genWorry:
-    speaker: geneva
-    display: I completely understand. I'm a little worried, too, truth be told. The others are more reluctant, but I have no qualms about bringing you up early. Your safety is our highest priority.
-    next: noPromiseReRe
-    type: conv
-  
-  noPromiseReRe:
-    speaker: ingram
-    display: Thanks, Geneva. 
-    next: anythingElseA
-    type: conv
-
-  anythingElseA:
-    speaker: geneva
-    display: Was there anything else you wanted to talk about?
-    next: discussChoiceB
-  
-  argonaut:
-    speaker: ingram
-    display: Can I take out the Argonaut for a joyride?
-    next: argoRe
-    type: conv
-  
-  argoRe:
-    speaker: geneva
-    display: ... Is that a joke? Are you asking me if you can take the multi-million dollar deep sea exploration vehicle out for a "joyride" as a joke?
-    next: yesJoke
-    type: conv
-  
-  yesJoke:
-    speaker: ingram
-    display: ...Yes?
-    next: yesJokeRe
-    type: conv
-  
-  yesJokeRe:
-    speaker: geneva
-    display: Are you trying to give me an aneurysm? Don't joke about that shit. 
-    next: jokeRe
-    type: conv
-  
-  jokeRe:
-    speaker: geneva
-    display: You're allowed to use the Argonaut if and ONLY if your safety at the station has been compromised and you need to return to the surface. And it lets us know if you undock it.
-    next: anythingElse
-    type: conv
-
-  anythingElseB:
-    speaker: geneva
-    display: Was there anything else you wanted to talk about?
-    next: discussChoiceA
-    type: conv
-
-  sec19:
-    speaker: geneva
-    display: Well, if we have nothing else that needs to be addressed right now, I guess this is a good time to call it a night. Good night, Dr. Ingram. Stay safe.
-    next: sec20
-    type: conv
-  
-  sec20:
-    speaker: ingram
-    display: Good night, Geneva.
-    next: sec21
-    type: conv
-
   end:
-    type: endOfDay
+    type: end
+
+
+conv2:
+  requires:
+    - creeped
+  conflicts: 
+    - radio3
+  next: conv3
+  start: 
+    speaker: ingram
+    display: The radio isn't busted, is it?
+    next: radio5re
+    type: conv
+  radio5re:
+    speaker: toby
+    display: It wasn't the last time I checked. Why?
+    next: Radio5re2
+    type: conv
+  radio5re2:
+    speaker: ingram
+    display: It turned on in the middle of the night last night. Or - I guess that's not quite it. It's normally pretty quiet unless one of you is broadcasting, but it's started picking something up at like... two or three in the morning.
+    next: radio5re3
+    type: conv
+  radio5re3:
+    speaker: toby
+    display: That's weird. Why not just turn it off?
+    next: radio5re4
+    type: conv
+  radio5re4:
+    speaker: ingram
+    display: I - I don't - (sigh) I don't want to turn it off unless I have to. I'm kind of... cut off down here. There's the emergency button, yeah, but it's not like I'm having an emergency. 
+    next: radio5re5
+    type: conv
+  radio5re5:
+    speaker: ingram
+    display: It's just creepy down here by myself and if someone is trying to talk to me on the other end of the radio, I'd like to know. 
+    next: radio5re6
+    type: conv
+  radio5re6:
+    speaker: toby
+    display: Oh. 
+    next: radio5re7
+    type: conv
+  radio5re7:
+    speaker: ingram
+    display: '...'
+    next: radio5re8
+    type: conv
+  radio5re8:
+    speaker: toby
+    display: I guess I can understand that.
+    next: radio5re9
+    type: conv
+  radio5re9:
+    speaker: toby
+    display: In any case, to answer your question, it might be picking up a signal from a passing ship. Or it could be aliens. Y'know. Always a possibility.
+    next: radio5re10
+    type: conv
+  radio5re10:
+    speaker: ingram
+    display: I guess...
+    next: radio5re11
+    type: conv
+  radio5re11:
+    speaker: toby
+    display: Did you want to talk about anything else?
+    next: end
+    type: conv
+  end:
+    type: end
+
+
+conv3:
+  requires: 
+    - creeped
+    - radio3
+    - weirdThings4
+  conflicts: null
+  next: convUp
+  start: 
+    speaker: toby
+    display: I mean, like I said you can always turn off the radio. But honestly... You're kind of worrying me and Geneva. Do you want to come back up? 
+    next: end
+    type: conv
+  end:
+    type: end
+
+convUp:
+  requires:
+    - creeped
+  conflicts: null
+  next: convBlah
+  start:
+    type: choice
+    choices:
+      A:
+        text: ...I want to come back to the surface.
+        target: endGameEarly
+      B:
+        text: No. Everything is fine. 
+        target: liar
+
+  liar:
+    speaker: ingram
+    display: No. Everything is fine. I'm keeping it together. It's fine.
+    next: liar2
+    type: conv
+  liar2:
+    speaker: toby
+    display: Well... Okay. 
+    next: end
+    type: conv
+
+  endGameEarly:
+    speaker: toby
+    display: Okay. I'll talk to Geneva. If it comes down to it we can always send the coast guard to pick you up! 
+    next: endgame1
+    type: conv
+  endgame1:
+    speaker: ingram
+    display: ...I'm sorry.
+    next: endgame2
+    type: conv
+  endgame2:
+    speaker: toby
+    display: Don't worry about it, bud. God knows I've gotten spooked enough times down there. I get it. Just make sure you don't leave anything important behind! Gimmie a minute to go find Geneva.
+    next: endgame3
+    type: conv
+  endgame3:
+    speaker: ingram
+    display: '...okay.'
+    next: endgame4
+    type: conv
+  endgame4:
+    speaker: ingram
+    display: '...'
+    next: endgame5
+    type: conv
+  endgame5:
+    speaker: toby
+    display: Hey, bud. Still there?
+    next: endgame6
+    type: conv
+  endgame6:
+    speaker: ingram
+    display: ...Yeah.
+    next: endgame7
+    type: conv
+  endgame7:
+    speaker: toby
+    display: Geneva says not to worry about anything. Just get everything important packed onto the Argonaut and a boat will meet you in the morning. Sound good?
+    next: endgame8
+    type: conv
+  endgame8:
+    speaker: ingram
+    display: Yeah. I'll go ahead and do that.
+    next: endgame9
+    type: conv
+  endgame9:
+    speaker: toby
+    display: Looking forward to seeing you soon. And you've got a cool pen waiting for you, too!
+    next: endgame10
+    type: conv
+  endgame10:
+    speaker: ingram
+    display: Thanks, Toby. I'll see you soon.
+    next: endgame11
+    type: conv
+  endgame11:
+    speaker: 'ingram'
+    display: '.......'
+    next: end
+    type: special
+  end:
+    type: end 
+
+convBlah:
+  requires:
+    - liar
+  conflicts: null
+  next: conv6
+  start:
+    speaker: toby
+    display: Well, uh. Let us know if anything changes. I'm kind of feeling like you want to be left along so I'm gonna... go. 'Night, Ingram.
+    next: sec1
+    type: conv
+  sec1:
+    speaker: ingram
+    display: Bye.
+    next: end
+    type: conv
+  end:
+    type: end
+
+
+conv6:
+  requires:
+    - aok
+  conflicts: null
+  next: conv7
+  start:
+    speaker: toby
+    display: Well, uh. Let us know if anything changes. I'm kind of feeling like you want to be left along so I'm gonna... go. 'Night, Ingram.
+    next: sec1
+    type: conv
+  sec1:
+    speaker: ingram
+    display: Bye.
+    next: end
+    type: conv
+  end:
+    type: end
+
+conv7:
+  requires: 
+    - endGameEarly
+  conflicts: null
+  next: conv8
+  start:
+    speaker: '?'
+    display: '...you......#w##.. ant.... ##. ......t#o#.... ..... ...le$ve?...... ..####.##saf##..... ....##co@#l pen!#..##...#..'
+    next: bet1
+    type: conv
+    flag: special
+  bet1:
+    speaker: ingram
+    display: ...Stop it.
+    next: sec1
+    type: conv
+  sec1: 
+    speaker: '?'
+    display: '...#.... .....#wh#y-..d.o..... ..y#o. .u......#.... ...##w#an.t.. ...#.t....o.##........l#eave.... .....e#...arl..y?.#...'
+    next: bet2
+    type: conv
+  bet2:
+    speaker: ingram
+    display: Stop mimicking us. 
+    next: sec2
+    type: conv
+  sec2:
+    speaker: '?'
+    display: '.....#....d.o...#. ..#.y. .#ou... ...#hav.e.-inf-..s@mew#ere.#... ..to..#. ....#.b.e?... ....#..#I-ll....... ..m!s$....#.y.ou...#...'
+    next: sec3
+    type: conv
+  sec3:
+    speaker: ingram
+    display: I'm  not doing this. I don't need to listen to... whatever you are.
+    next: sec4
+    type: conv
+  sec4:
+    speaker: '?'
+    display: '...sh.ould#...yo.u.#ne#d t@.. l#ave#..th.s##@tion#..f..or... a n.y rea$o.n.....'
+    next: sec5
+    type: conv
+  sec5:
+    speaker: ingram
+    display: No. I'm going home and I'm not coming back down agai - 
+    next: end
+    type: conv
+  sec6:
+    speaker: '?'
+    display: '...'
+    next: end
+    type: conv
+  end:
+    type: endGame
+
+conv8:
+  requires: 
+  conflicts: 
+    - endGameEarly
+  next: null
+  start:
+    speaker: '?'
+    display: '..he.y......#w##.. ant.... ##. ......t#o#.... ..... ...g...... ..####.##saf##..... ....##co@#l pen!#..##...#..'
+    next: bet1
+    type: conv
+    flag: special
+  bet1:
+    speaker: ingram
+    display: ...What do you want?
+    next: sec1
+    type: conv
+  sec1: 
+    speaker: '?'
+    display: '...#.se.e.. .....#m.#e.d.o..... ..y#o. .u......#.... ...##w#an.t.. ...#.t....o.##.........?.#...'
+    next: bet2
+    type: conv
+  bet2:
+    speaker: ingram
+    display: How are you doing that? How are you using our voices? 
+    next: sec2
+    type: conv
+  sec2:
+    speaker: '?'
+    display: '.....#...li$t.ener$#. ..#t@.y. .#ou... ...#hav.e.-inf-...#... ..to..#. ....#.k.no.. .w...#..#....... ..m!s$....#.y.ou...#...'
+    next: sec3
+    type: conv
+  sec3:
+    speaker: ingram
+    display: What do you want from us? From me?
+    next: sec4
+    type: conv
+  sec4:
+    speaker: '?'
+    display: '...sh.ould#...yo.u.#ne#d t@.. l#ave#..th.s##@tion#..f..or... a n.y rea$o.n.....'
+    next: sec5
+    type: conv
+  sec5:
+    speaker: ingram
+    display: '...'
+    next: end
+    type: conv
+  sec6:
+    speaker: '?'
+    display: '..ex.ci#ed ...#....t.o....### #..#..#.h....av..# ##....f#...un...#'
+    next: end
+    type: conv
+  end:
+    type: endGame

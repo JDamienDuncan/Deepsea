@@ -1,11 +1,10 @@
 conv1:
   requires: null
   conflicts: null
-  next: conv2
+  next: null
   start:
     speaker: geneva
-    display: >-
-      Dr. Ingram, do you copy?
+    display: Dr. Ingram? Are you there?
     next: sec2
     type: conv
 
@@ -13,323 +12,268 @@ conv1:
     type: choice
     choices:
       A:
-        text: Yes, I do. 
-        target: hearYou
+        text: Hi, Geneva. Shit's getting weird.
+        target: weird7
       B:
-        text: '...'
-        target: quiet
+        text: Yes, Geneva. I'm here.
+        target: imHere
 
-  hearYou:
+  imHere:
     speaker: ingram
-    display: Yes, I copy, Geneva. How are things on the surface?
-    next: sec3
+    display: Yes, Geneva. I'm here.
+    next: imHere2
     type: conv
-
-  quiet:
+  imHere2:
+    speaker: geneva
+    display: Is everything all right? Tobias mentioned that you seemed... tense. 
+    next: imHere3
+    type: conv
+  imHere3:
+    type: choice
+    choices:
+      A:
+        text: I'm fine. I'm holding it together. 
+        target: holdItTogether
+      B:
+        text: I'm... kind of stressed.
+        target: stress
+  stress:
     speaker: ingram
-    display: '...'
-    next: quietRe
-    type: conv
+    display: I'm... kind of stressed. A bunch of weird things have been happening with the radio AND otherwise, and quite frankly, I'm - I'm scared. I was trying to play it cool but being down here alone is really creepy. I feel like I'm in a horror movie.
+    next: stress2
+    type: notOkay5
   
-  quietRe:
-    speaker: geneva
-    display: Dr. Ingram? Are you there?
-    next: quietRe2
-    type: conv
 
-  quietRe2:
+
+  weird7:
     speaker: ingram
-    display: Yeah... I'm just... thinking. Um. So how are things on the surface?
-    next: sec3
+    display: Hi Geneva. Shit is getting weird around here and I don't like it. At all.
+    next: weird7re
     type: conv
-
-  sec3:
+  weird7re:
     speaker: geneva
-    display: Everything is perfectly fine up here. Well, it's never perfectly fine, but things *here* are pretty okay, all things considered.
+    display: Calm down, Ingram. Tell me what happened.
+    next: weird7re2
+    type: conv
+  weird7re2:
+    speaker: ingram
+    display: So there's the radio thing? That keeps happening, and I feel like I'm in a horror movie. Also the drones keep bringing back weird pictures and I'm getting seriously creeped out. 
+    next: weird7re3
+    type: conv
+  weird7re3:
+    speaker: geneva
+    display: Weird pictures?
+    next: weird7re4
+    type: conv
+  weird7re4:
+    speaker: ingram
+    display: Like, the kinds of things that make you think "ooh, mermaids!" if it weren't for the fact that mermaids aren't real and if they were, they would probably be terrifying? Pointy teeth and claw mermaids?
+    next: weird7re5
+    type: conv
+  weird7re5:
+    speaker: geneva
+    display: That's... very specific. Are you okay?
+    next: weird7choice
+  weird7choice:
+    type: choice
+    choices:
+      A:
+        text: Do I sound okay?
+        target: notOkay
+      B:
+        text: I'm fine. I'm holding it together. 
+        target: holdItTogether
+
+  holdItTogether:
+    speaker: ingram
+    display: I'm Fine. I'm holding it together. It's just a few more days. I'm fine. I can handle it.
+    next: together2
+    type: conv
+  together2:
+    speaker: geneva
+    display: I'm going to be honest, Ingram. It doesn't feel like you're okay. But I'm going to trust what you're saying over what I'm feeling. Just.. Be safe. Don't do anything reckless.
+    next: together3
+    type: conv
+  together3:
+    speaker: ingram
+    display: ...I know. 
+    next: together4
+    type: conv
+  together4:
+    speaker: geneva
+    display: ...Is there anything you want to talk about before I go? 
+    next: together5
+    type: conv
+  together5:
+    speaker: ingram
+    display: ...No.
+    next: together6
+    type: conv
+  together6:
+    speaker: geneva
+    display: ...Ahem. As always, the Argonaut is there if you need to leave the station for any reason, and the emergency button is there for emergencies. Use them if you need them, Ingram.
+    next: together7
+    type: conv
+  together7:
+    speaker: ingram
+    display: ... I know.
+    next: together8
+    type: conv
+  together8:
+    speaker: geneva
+    display: Good night, Ingram.
+    next: together9
+    type: conv
+  together9:
+    speaker: ingram
+    display: Goodbye, Geneva.
     next: end
     type: conv
 
+  notOkay:
+    speaker: ingram
+    display: Do I sound okay? God - I've been trying to be all cool about it, but being down here alone is really creepy! I can't even tell if I'm imagining things, anymore.
+    next: notOkay2
+    type: conv
+  notOkay2:
+    speaker: ingram
+    display: Like. I thought I heard tapping at one of the windows the other day, and I look, and for half a second, I thought there was a face. It sounds crazy, and rationally, it IS crazy. But my gut keeps going "what if, what if what if?"
+    next: notOkay3
+    type: conv
+  notOkay3:
+    speaker: ingram
+    display: I keep debating between sleeping with the lights on or not. At least if the lights are off, if something does come to kill me, I won't have to see it when it does!
+    next: notOkay4
+    type: conv
+  notOkay4:
+    speaker: ingram
+    display: God. 
+    next: notOkay5
+    type: conv
+  notOkay5:
+    speaker: geneva
+    display: '...'
+    next: notOkay6
+    type: conv
+  notOkay6:
+    speaker: geneva
+    display: I'm sorry. This is my fault. I should have resisted more when they suggested sending you down alone. I'll have a boat out to your location by dawn. 
+    next: notOkay7
+    type: conv
+  notOkay7:
+    speaker: ingram
+    display: Geneva, no - you don't need to - 
+    next: notOkay8
+    type: conv
+  notOkay8:
+    speaker: geneva
+    display: No. It's not healthy, and it's been a safety hazard from the very beginning. We never should have asked you to do this. We should have just called off the whole thing when Tobias broke his leg. Gather everything you need and start packing the Argonaut. 
+    next: notOkay9
+    type: conv
+  notOkay9:
+    speaker: ingram
+    display: I... I'm not gonna win this argument. Thank you, Geneva. 
+    next: notOkay10
+    type: conv
+  notOkay10:
+    speaker: geneva
+    display: Don't thank me for fixing my own mistakes. 
+    next: notOkay11
+    type: conv
+  notOkay11:
+    speaker: geneva
+    display: ...For what it's worth, Ingram, when I feel like I'm in a horror movie... I turn on Disney music. That way at least nobody can use the footage without Disney's legal team up their ass.
+    next: notOkay12
+    type: conv
+  notOkay12:
+    speaker: ingram
+    display: One last huzzah, huh? Not a bad idea. I... Thank you. I'll see you soon. 
+    next: notOkay13
+    type: conv
+  notOkay13:
+    speaker: geneva
+    display: Before you go, promise me you'll do something tonight?
+    next: notOkay14
+    type: conv
+  notOkay14:
+    speaker: geneva
+    display: Unplug the stupid radio.
+    next: notOkay15
+    type: conv
+  notOkay15:
+    speaker: ingram
+    display: Heh... I'll do that. Good night, Geneva.
+    next: notOkay16
+    type: conv
+  notOkay16:
+    speaker: geneva
+    display: Good night, Ingram.
+    next: end
+    type: conv
   end:
     type: end
 
 conv2:
-  requires: 
-    - genevaWorry
-  conflicts: null
-  next: conv3
-  start:
-    speaker: geneva
-    display: More importantly, how are you holding up down there? You mentioned you were worried about staying down there...
-    next: sec1
-    type: conv
-
-  sec1:
-    type: choice
-    choices:
-      A:
-        text: I'm holding up.
-        target: holdUp
-      B:
-        text: I've been better. 
-        target: genevaWorry2
-  
-  holdUp:
-    speaker: ingram
-    display: I'm holding up okay. Would I choose this over a vacation to... I don't know, Hawaii? Maybe not. But I don't mind it.
-    next: sec2
-    type: conv
-
-  genevaWorry2:
-    speaker: ingram
-    display: I've been better. I've also been worse but... I've definitely been better. 
-    next: beenBetterRe
-    type: conv
-
-  beenBetterRe:
-    speaker: geneva
-    display: Bad enough to want to bail out?
-    next: beenBetterRe2
-    type: conv
-
-  beenBetterRe2:
-    speaker: ingram
-    display: No, I don't think I'm quite at that point. Things are just... I don't know. 
-    next: sec2
-    type: conv
-
-  sec2:
-    speaker: geneva
-    display: Well... Let me know if you start having second thoughts. I can always pull some strings and get a boat out there to pick you up early.
-    next: sec3
-    type: conv
-
-  sec3: 
-    speaker: ingram
-    display: I'll keep that in mind. 
-    next: end
-    type: conv
-
-  end:
-    type: end
-
-conv3:
-  requires: null
-  conflicts: null
-  next: conv4
-  start:
-    speaker: geneva
-    display: So how are things down there?
-    next: end
-    type: conv
-  
-  end:
-    type: end
-
-conv4:
-  requires: 
-    - "negative"
-  conflicts: null
-  next: conv5
-  start:
-    speaker: geneva
-    display: It looks like what you've been sending in hasn't been great... 
-    next: sec1
-    type: conv
-
-  sec1:
-    speaker: ingram
-    display: Sorry about that. I'm trying. 
-    next: sec2
-    type: conv
-
-  sec2:
-    speaker: geneva
-    display: All right. I'll give you the benefit of the doubt for now, but in all seriousness, our budget is tight. Time is money.
-    next: sec3
-    type: conv
-  
-  sec3:
-    speaker: ingram
-    display: I understand. 
-    next: end
-    type: conv
-
-  end: 
-    type: end
-
-conv5:
-  requires: null
-  conflicts: 
-    - "negative"
-  next: conv6
-  start:
-    speaker: geneva
-    display: I've been hearing good things so far from Tobias. Keep up the good work.
-    next: sec1
-    type: conv
-
-  sec1:
-    speaker: ingram
-    display: Thank you. I'm doing my best.
-    next: end
-    type: conv
-  
-  end:
-    type: end
-
-conv6:
-  requires: null
+  requirements:
+    - holdItTogether
   conflicts: null
   next: conv7
   start:
-    speaker: geneva
-    display: Do you have anything you wanted to discuss before we wrap up?  
-    next: sec1
-    type: conv
-
+    speaker: 'ingram'
+    display: '................ .......................... .........................'
+    next: end
+    type: sec1
+    flag: special
   sec1:
-    type: choice
-    choices:
-      A:
-        text: Nothing else to discuss.
-        target: noDiscuss6
-      B:
-        text: There's been these weird things...
-        target: weirdThings6
-  
-  noDiscuss6:
-    speaker: ingram
-    display: No. Nothing else to discuss.
+    speaker: '?'
+    display: '...co.##me...fi. nd##..... ....m#..e....'
     next: sec2
     type: conv
-
-  weirdThings6:
+  sec2:
+    speaker: 'ingram'
+    display: You... want me to find you.
+    next: sec3
+    type: conv
+  sec3:
+    speaker: '?'
+    display: '..st#a.y.#w##i.th...me..... ....s#.fe....'
+    next: sec4
+    type: conv
+  sec4:
     speaker: ingram
-    display: Actually... There's been weird things happening...
-    next: weird1
+    display: '......'
+    next: sec5
     type: conv
-
-  weird1:
-    speaker: geneva
-    display: Oh? Weird in what way?
-    next: weird2
+  sec5:
+    speaker: ' '
+    display: '........................................... ......................'
+    next: sec6
     type: conv
-  
-  weird2:
-    speaker: ingram
-    display: What time did Toby leave last night?
-    next: weird3
-    type: conv
-
-  weird3:
-    speaker: geneva
-    display: Tobias? I believe he left shortly after wrapping up with you. He said his niece's birthday is coming up and he wanted to go shopping for a gift for her. Why do you ask?
-    next: weird4
-    type: conv
-
-  weird4:
-    speaker: ingram
-    display: And nobody else was messing with the radio? 
-    next: weird5
-    type: conv
-  
-  weird5:
-    speaker: geneva
-    display: Nobody that I'm aware of. What's this all about? 
-    next: weird6
-    type: conv
-
-  weird6:
-    speaker: ingram
-    display: The radio has been acting up in the middle of the night. It scared the crap out of me the first time. 
-    next: weird7
-    type: conv
-  
-  weird7:
-    speaker: geneva
-    display: Acting up how?
-    next: weird8
-    type: conv
-
-  weird8:
-    speaker: ingram
-    display: It just... turned on. It was all static. Sometimes it sounds like there might be talking, but nothing I can understand.
-    next: weird9
-    type: conv
-
-  weird9:
-    speaker: geneva
-    display: How odd. Well, I'm no expert, but it was probably just some crosstalk or something. All sorts of boats go by there, so it wouldn't surprise me if the radio picked up something.
-    next: weird10
-    type: conv
-
-  weird10:
-    type: choice
-    choices: 
-      A:
-        text: You're probably right.
-        target: youRight
-      B:
-        text: I'm not so sure.
-        target: notSure
-
-  youRight:
-    speaker: ingram
-    display: You're probably right. Sorry to bother you.
-    next: youRightRe
-    type: conv
-  youRightRe:
-    speaker: geneva
-    display: Not at all. 
+  sec6:
+    speaker: ' '
+    display: Dr. Ingram, do you copy? The vessel stationed at Marine Station O.G.G.A. sent out an undocking notification early this morning and its GPS has been damaged. Dr. Ingram, if you're there, we are requesting any information you may have on the subject...
     next: end
     type: conv
-
-  notSure:
-    speaker: ingram
-    display: I'm not so sure.
-    next: notSureRe
-    type: conv
-  notSureRe:
-    speaker: geneva
-    display: Well, what else could it be?
-    next: notSureRe2
-    type: conv
-  notSureRe2:
-    speaker: ingram
-    display: ... I don't know. Aliens, maybe. 
-    next: notSureRe3
-    type: conv
-  notSureRe3:
-    speaker: geneva
-    display: That's what I thought. There's no use in frightening yourself. Seems like the last thing I would want to do if I were down there...
-    next: end
-    type: conv
-
   end:
-    type: end
+    type: endGame
+
 
 conv7:
-  requires: null
+  requires: 
+    - notOkay
   conflicts: null
   next: null
   start:
-    speaker: geneva
-    display: Well, if there's nothing else to talk about...
-    next: sec1
-    type: conv
-
-  sec1:
-    speaker: geneva
-    display: As always, the Argonaut is there should you need to leave the staion for any reason, the emergency contact button is there for emergencies, and so on. Good night, Dr. Ingram.
-    next: sec2
-    type: conv
-
-  sec2:
     speaker: ingram
-    display: Good night, Geneva.
+    display: '..................................... ......................'
+    next: sec1
+    type: special
+    flag: special
+  sec1:
+    speaker: '?'
+    display: '...pl.##ease.... sta -'
     next: end
     type: conv
-
+    flag: 
   end:
-    type: endOfDay
-
+    type: endGame
