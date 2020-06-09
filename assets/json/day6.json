@@ -51,7 +51,7 @@
         "speaker": "ingram",
         "display": "I'm... kind of stressed. A bunch of weird things have been happening with the radio AND otherwise, and quite frankly, I'm - I'm scared. I was trying to play it cool but being down here alone is really creepy. I feel like I'm in a horror movie.",
         "next": "stress2",
-        "type": "notOkay5"
+        "type": "conv"
       },
       "weird7": {
         "speaker": "ingram",
@@ -86,7 +86,8 @@
       "weird7re5": {
         "speaker": "geneva",
         "display": "That's... very specific. Are you okay?",
-        "next": "weird7choice"
+        "next": "weird7choice",
+        "type": "conv"
       },
       "weird7choice": {
         "type": "choice",
@@ -252,7 +253,7 @@
         "type": "conv"
       },
       "end": {
-        "type": "end"
+        "type": "endGame"
       }
     },
     "conv2": {
